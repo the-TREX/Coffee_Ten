@@ -1,0 +1,148 @@
+{% load static %}
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+        font-family: Homa;
+    }
+
+    .back {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(6px);
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .form-box {
+        max-width: 300px;
+        background: #3f3f46;
+        overflow: hidden;
+        border-radius: 16px;
+        color: #010101;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 32px 24px 24px;
+        gap: 16px;
+        text-align: center;
+    }
+
+    /*Form text*/
+    .title {
+        color: #007aff;
+        font-weight: bold;
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 16px;
+    }
+
+    /*Inputs box*/
+    .form-container {
+        overflow: hidden;
+        border-radius: 8px;
+        background-color: #fff;
+        margin: 1rem 0 .5rem;
+        width: 100%;
+
+    }
+
+    .input {
+        background: none;
+        border: 0;
+        outline: 0;
+        height: 40px;
+        width: 100%;
+        border-bottom: 1px solid #eee;
+        font-size: .9rem;
+        padding: 8px 15px;
+
+    }
+
+    .form-section {
+        padding: 16px;
+        font-size: .85rem;
+        background-color: #3f3f46;
+        box-shadow: rgb(0 0 0 / 8%) 0 -1px;
+        text-align: center;
+    }
+
+    .form-section a {
+        font-weight: bold;
+        color: #0066ff;
+        transition: color .3s ease;
+        text-decoration: none;
+    }
+
+    .form-section a:hover {
+        color: #8a0404;
+        text-decoration: none;
+    }
+
+    /*Button*/
+    .form button {
+        background-color: #22c55e;
+        color: #fff;
+        border: 0;
+        border-radius: 24px;
+        padding: 10px 16px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color .3s ease;
+        width: 100%;
+    }
+
+    .form button:hover {
+        background-color: #005ce6;
+    }
+
+    /* نمایش خطاها */
+    .error-message {
+        color: #ff3333;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+</style>
+<!doctype html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{% static 'Images/svg/favicon.png' %}"/>
+    <title>ورود به حساب کاربری | کافی تن</title>
+
+</head>
+<body class="back"
+      style="background-image: url('{% static 'bg_coffe.png' %}'); background-size: cover; background-position: center;">
+
+<div class="form-box" dir="rtl">
+    <form class="form" method="post">
+        {% csrf_token %}
+        <span class="title">ورود به حساب</span>
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+        <div class="form-container">
+            <input type="text" class="input" placeholder="نام کاربری" name="username" required>
+            <input type="password" class="input" placeholder="رمز عبور" name="password" required>
+        </div>
+        <button type="submit">ورود</button>
+    </form>
+    <div class="form-section">
+        <p>حساب ندارید؟ <a href="{% url 'account:register' %}">ثبت نام کنید</a></p>
+    </div>
+</div>
+</body>
+</html>

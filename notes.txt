@@ -1,0 +1,2 @@
+baraye faal sazi venv : .\venv\Scripts\Activate
+gheyrefaal sazi : deactivate

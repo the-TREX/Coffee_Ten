@@ -1,0 +1,32 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>کافئین | صفحه اصلی</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'Images/svg/favicon.png' %}"/>
+    <link rel="stylesheet" href="{% static 'styles/app.css' %}"/>
+    <link rel="stylesheet" href="{% static 'styles/swiper.css' %}"/>
+    <link rel="stylesheet" href="{% static 'styles/form_style.css' %}"/>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+    <!-- در base.html یا هدر -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="{% static 'scripts/App.js' %}" defer></script>
+    <script type="text/javascript">
+        if (
+            localStorage.theme === "dark" ||
+            (!("theme" in localStorage) &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+    </script>
+</head>
