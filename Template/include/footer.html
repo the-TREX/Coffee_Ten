@@ -15,15 +15,6 @@
     <div class="container">
         <!-- EMAIL BOX -->
         <div class="mb-12 flex border-b pb-8 border-white/10 flex-col-reverse sm:flex-row gap-y-5 items-center sm:items-end justify-between">
-            <div class="flex gap-y-2 flex-col">
-                <h2 class="font-DanaDemiBold">از جدیدترین تخفیف ها با خبر شوید</h2>
-                <div class="bg-zinc-600 p-1 rounded-lg w-72 lg:w-[350px] flex items-center justify-between">
-                    <input type="text" class="bg-transparent text-gray-200 px-2" placeholder="ایمل یا شماره تلفن"/>
-                    <button class="px-4 py-1 bg-green-500 rounded-lg font-DanaMedium">
-                        ثبت
-                    </button>
-                </div>
-            </div>
             <!-- GO TO TOP BTN -->
             <a href="#"
                class="flex items-center gap-x-2 text-sm p-2 cursor-pointer rounded-lg border-2 border-gray-200">
@@ -37,7 +28,7 @@
         <div class="flex mt-8 items-center justify-between flex-col lg:flex-row gap-y-10 lg:gap-x-20 flex-wrap">
             <div class="flex flex-col gap-y-2 w-full lg:w-[30%]">
                 <!-- LOGO -->
-                <a href="#" class="text-green-500 transition-colors w-fit block">
+                <a href="{% url 'home:main' %}" class="text-green-500 transition-colors w-fit block">
                     <p class="font-MorabbaBold text-3xl">کافی تِن</p>
                     <p class="tracking-tighter">حس نو با قهوه...</p>
                 </a>
@@ -54,13 +45,13 @@
                 <div class="flex gap-x-10 child:space-y-2">
                     <ul class="child-hover:text-green-500 child:transition-all">
                         <li>
-                            <a href="index.html">صفحه اصلی</a>
+                            <a href="{% url 'home:main' %}">صفحه اصلی</a>
                         </li>
                         <li>
-                            <a href="shop.html">فروشگاه</a>
+                            <a href="{% url 'products:shop' %}">فروشگاه</a>
                         </li>
                         <li>
-                            <a href="contact-us.html">تماس با ما </a>
+                            <a href="{% url 'account:contact_us' %}">تماس با ما </a>
                         </li>
                     </ul>
                     <ul class="child-hover:text-green-500 child:transition-colors">

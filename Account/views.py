@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import RegisterForm
+from .forms import RegisterForm, UserEditForm, ContactForm
 from django.contrib import messages
 
 
@@ -16,7 +16,6 @@ def user_register(request):
     return render(request, 'account/register.html', {'form': form})
 
 
-
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -30,8 +29,30 @@ def user_login(request):
     else:
         return render(request, 'account/login.html')
 
+
 def user_logout(request):
     logout(request)
     return redirect("/")
 
 
+def user_edite(request):
+    user = request.user
+    form = UserEditForm(instance=user)
+    if request.method == "POST":
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'اطلاعات شما با موفقیت ویرایش شد.')
+    return render(request, "account/edit.html", {'form': form})
+
+
+def contact_us(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "انتقاد شما با موفقیت ثبت گردید !")
+            return redirect("home:main")
+    else:
+        form = ContactForm()
+    return render(request, 'account/contact.html', {'form': form})

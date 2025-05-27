@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+    کافی تن | فروشگاه
+{% endblock %}
+{% block content %}
+    <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {% for item in prod %}
+            <div class="group bg-white dark:bg-zinc-700 rounded-lg shadow overflow-hidden">
+
+                    <!-- PRODUCT IMAGE -->
+                <a href="{% url 'products:detail_products' slug=item.slug %}">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}"
+                         class="group-hover:scale-105 duration-300 w-32 h-32 lg:w-48 lg:h-48 mx-auto mb-3 object-contain"/>
+                </a>
+
+                    <!-- PRODUCT MAIN -->
+                <div class="px-2 lg:px-4 mb-3">
+                    <a href="{% url 'products:detail_products' slug=item.slug %}"
+                       class="line-clamp-2 font-DanaMedium mb-2 text-sm lg:text-base block">
+                        {{ item.name }}
+                    </a>
+                    <div class="flex items-center gap-x-1 lg:gap-x-3">
+                        <p class="font-DanaDemiBold text-green-600 dark:text-green-500">
+                            {{ item.discount_price|floatformat:0|intcomma }}
+                            <span class="font-Dana text-sm">تومان</span>
+                        </p>
+                        {% if item.price > item.discount_price %}
+                            <del class="text-xs text-rose-400 font-Dana">
+                                {{ item.price|floatformat:0|intcomma }}
+                            </del>
+                        {% endif %}
+                    </div>
+                </div>
+
+                    <!-- PRODUCT FOOTER -->
+                <div class="flex items-center justify-start px-2 lg:px-4 mb-3">
+                <span class="rounded-full p-2 dark:bg-zinc-800 dark:hover:bg-green-500 bg-gray-100 hover:bg-green-600 hover:text-white transition-all duration-300">
+                    <svg class="w-4 h-4">
+                        <use href="#shopping-cart"></use>
+                    </svg>
+                </span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

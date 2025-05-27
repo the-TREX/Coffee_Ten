@@ -17,7 +17,7 @@
     <nav class="w-full hidden md:flex shadow py-5 bg-white dark:bg-zinc-700">
         <div class="container flex items-center justify-between">
             <!-- لوگو -->
-            <a href="###"
+            <a href="{% url 'home:main' %}"
                class="flex items-center gap-x-1 dark:text-brown-300 text-brown-600 font-MorabbaMedium text-xl lg:text-3xl">
                 <img src="{% static 'images/logo.png' %}" alt="Coffee Ten Logo" class="w-6 h-6"/>
                 <h1>کافی تِن</h1>
@@ -26,49 +26,22 @@
             <!-- منوی اصلی -->
             <ul class="mt-2 flex items-center gap-x-4 lg:gap-x-10 font-DanaMedium lg:mr-30 xl:mr-32 child:z-30">
                 <li class="nav-item text-green-500">
-                    <a href="###">صفحه اصلی</a>
+                    <a href="{% url 'home:main' %}">صفحه اصلی</a>
                 </li>
 
-                <!-- آیتم فروشگاه با زیرمنو -->
-                <li class="relative group">
+                <!-- آیتم فروشگاه -->
+                <li class="nav-item">
                     <div class="flex items-center flex-row gap-x-1">
-                        <a href="###">فروشگاه</a>
-                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180">
-                            <use href="#chevron-down"></use>
-                        </svg>
-                    </div>
-                    <!-- زیرمنو -->
-                    <div class="absolute bg-white flex flex-col gap-y-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:top-10 transition-all delay-100 dark:bg-zinc-700 top-20 w-52 rounded border-t-2 border-green-500 p-5 text-base shadow-md child-hover:text-green-500 child:transition-all">
-                        <a href="###?category=espresso">اسپرسو</a>
-                        <a href="###?category=turkish">قهوه ترک</a>
-                        <a href="###?category=french">قهوه فرانسه</a>
-                        <a href="###?category=capsules">کپسول اسپرسو</a>
-                        <a href="###?category=equipment">لوازم و تجهیزات</a>
+                        <a href="{% url 'products:shop' %}">فروشگاه</a>
                     </div>
                 </li>
 
-                <!-- آیتم مقالات با زیرمنو -->
-                <li class="relative group">
-                    <div class="flex items-center flex-row gap-x-1">
-                        <a href="###">مقالات</a>
-                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180">
-                            <use href="#chevron-down"></use>
-                        </svg>
-                    </div>
-                    <!-- زیرمنو -->
-                    <div class="absolute bg-white flex flex-col gap-y-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:top-10 transition-all delay-100 dark:bg-zinc-700 top-20 w-52 rounded border-t-2 border-green-500 p-5 text-base shadow-md child-hover:text-green-500 child:transition-all">
-                        <a href="###?category=health">سلامتی</a>
-                        <a href="###?category=news">اخبار قهوه</a>
-                        <a href="###?category=brewing">روش‌های دم‌آوری قهوه</a>
-                        <a href="###?category=equipment">لوازم و تجهیزات قهوه</a>
-                    </div>
-                </li>
 
                 <li class="nav-item">
-                    <a href="###">تماس با ما</a>
+                    <a href="{% url 'account:contact_us' %}">تماس با ما</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#">درباره ما</a>
+                    <a href="{% url 'products:about' %}">درباره ما</a>
                 </li>
             </ul>
 
@@ -83,27 +56,6 @@
                         <use href="#sun"/>
                     </svg>
                 </button>
-
-                <!-- دکمه سبد خرید -->
-                <button class="open-shopping-cart__btn relative">
-                    <svg class="w-6 h-6">
-                        <use href="#shopping-cart"/>
-                    </svg>
-                    <!-- نشانگر تعداد -->
-                    <span class="absolute -top-2 -right-2 w-4 h-4 text-[10px] flex items-center justify-center bg-red-500 text-white rounded-full">2</span>
-                </button>
-
-                <!-- دکمه جستجو -->
-                <button class="group relative flex justify-end">
-                    <svg class="w-6 h-6">
-                        <use href="#search"/>
-                    </svg>
-                    <div class="absolute top-20 flex items-center w-[350px] bg-white dark:bg-zinc-600 rounded-full opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:top-10 transition-all delay-100 child:rounded-full px-2 border dark:border-none border-gray-100 shadow py-1">
-                        <input type="text" placeholder="نام محصول..." class="bg-transparent w-full p-2"/>
-                        <a href="#" class="bg-green-500 text-white text-sm py-2 px-3">جستجو</a>
-                    </div>
-                </button>
-
                 <!-- بخش حساب کاربری -->
                 {% if request.user.is_authenticated %}
                     <button class="group relative px-2 lg:px-3 py-2 flex items-center justify-end gap-x-1 text-white transition-colors bg-green-500 hover:bg-green-600 rounded-lg">
@@ -127,12 +79,12 @@
                                 </svg>
                                 لیست پیام ها
                             </a>
-                            <a href="##"
+                            <a href="{% url 'account:edit_profile' %}"
                                class="flex items-center gap-x-3 w-full hover:bg-green-500/20 hover:text-green-500 rounded">
                                 <svg class="h-5 w-5">
                                     <use href="#cog"></use>
                                 </svg>
-                                اطلاعات کاربری
+                                ویرایش کاربری
                             </a>
                             <!-- جداکننده -->
                             <span class="border-t dark:border-gray-100/20 border-gray-100-gray-100"></span>
@@ -205,7 +157,7 @@
         <!-- منوی موبایل -->
         <ul class="flex flex-col gap-y-6 text-zinc-700 dark:text-white">
             <li>
-                <a href="#" class="flex items-center gap-x-2">
+                <a href="{% url 'home:main' %}" class="flex items-center gap-x-2">
                     <svg class="w-5 h-5">
                         <use href="#home"></use>
                     </svg>
@@ -221,40 +173,9 @@
                         </svg>
                         فروشگاه
                     </a>
-                    <svg class="w-4 h-4 mobile-submenu__toggle cursor-pointer">
-                        <use href="#chevron-down"></use>
-                    </svg>
                 </div>
-                <!-- زیرمنوی فروشگاه -->
-                <ul class="mobile-submenu hidden flex flex-col gap-y-3 pr-8 mt-3 text-sm">
-                    <li><a href="#?category=espresso">اسپرسو</a></li>
-                    <li><a href="#?category=turkish">قهوه ترک</a></li>
-                    <li><a href="#?category=french">قهوه فرانسه</a></li>
-                    <li><a href="#?category=capsules">کپسول اسپرسو</a></li>
-                    <li><a href="#?category=equipment">لوازم و تجهیزات</a></li>
-                </ul>
             </li>
 
-            <li class="">
-                <div class="flex items-center justify-between">
-                    <a href="#" class="flex items-center gap-x-2">
-                        <svg class="w-5 h-5">
-                            <use href="#document"></use>
-                        </svg>
-                        مقالات
-                    </a>
-                    <svg class="w-4 h-4 mobile-submenu__toggle cursor-pointer">
-                        <use href="#chevron-down"></use>
-                    </svg>
-                </div>
-                <!-- زیرمنوی مقالات -->
-                <ul class="mobile-submenu hidden flex flex-col gap-y-3 pr-8 mt-3 text-sm">
-                    <li><a href="#?category=health">سلامتی</a></li>
-                    <li><a href="#?category=news">اخبار قهوه</a></li>
-                    <li><a href="#?category=brewing">روش‌های دم‌آوری قهوه</a></li>
-                    <li><a href="#?category=equipment">لوازم و تجهیزات قهوه</a></li>
-                </ul>
-            </li>
 
             <li>
                 <a href="#" class="flex items-center gap-x-2">

@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}]
+{% load humanize %}
+{% block title %}
+    {{ detail_pro.name }}
+{% endblock %}
+{% block content %}
+    <main class="container child:mt-8">
+        <!-- Breadcrumbs -->
+        <section>
+            <ul class="flex items-center gap-x-2 text-gray-400 text-sm lg:text-base">
+                <li class="flex items-center gap-x-2">
+                    <a href="{% url 'home:main' %}">صفحه اصلی</a>
+                    <svg class="w-4 h-4">
+                        <use href="#chevron-left"></use>
+                    </svg>
+                </li>
+                <li class="flex items-center gap-x-2">
+                    <a href="index.html"> فروشگاه</a>
+                    <svg class="w-4 h-4">
+                        <use href="#chevron-left"></use>
+                    </svg>
+                </li>
+                <li class="flex items-center gap-x-2">
+                    جزییات محصول
+                </li>
+            </ul>
+        </section>
+        <!-- PRODUCT DETAILS SECTION -->
+        <section
+                class="flex flex-col lg:flex-row items-start gap-4 child:rounded-lg child:bg-white child:dark:bg-zinc-700 child:shadow child:p-4">
+            <!-- IMAGE & INFO BOX Container -->
+            <div class="w-full lg:w-3/4 flex flex-col gap-y-8 ">
+                <!-- IMAGE & INFO BOX -->
+                <div class="flex flex-col lg:flex-row gap-5">
+                    <!-- SLIDER & ACTION BTN  -->
+                    <div class="flex  lg:w-96 flex-col gap-y-4">
+                        <!-- ACTION BTN -->
+                        <div class="flex items-center gap-x-3 mr-2">
+                        </div>
+                        <!-- SLIDER -->
+                        <div class="swiper mt-2 w-full porduct-details-slider rounded-lg">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="{{ products.image.url }}"
+                                         class="rounded-lg shadow w-full  object-cover lg:w-96 lg:h-fit" alt="">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                    <!-- INFO (TITLE , NAME , ...) -->
+                    <div class="flex flex-col gap-y-4 w-full">
+                        <!-- NAME -->
+                        <div class="flex items-start justify-between border-b border-b-gray-200 py-2">
+                            <div class="flex flex-col gap-y-1">
+                                <h3 class="text-2xl font-MorabbaMedium">{{ products.name }}</h3>
+                            </div>
+
+                        </div>
+                        <div class="flex gap-x-1 text-gray-400 ">
+                            <svg class="w-5 h-5">
+                                <use href="#list-bullet"></use>
+                            </svg>
+                            <p>دسته‌بندی : دانه اسپرسو</p>
+                        </div>
+                        <p class="mt-2 font-DanaMedium">ویژگی های محصول :</p>
+                        <div
+                                class="grid grid-cols-12 gap-4 child:col-span-12 xl:child:col-span-6 child:dark:bg-zinc-800 child:bg-gray-100 child:h-12 child:rounded-lg child:text-sm child:flex child:items-center child:justify-center">
+                            <div>
+                                <p class="text-zinc-600 dark:text-gray-400">گونه :{{ products.breed }}</p>
+                            </div>
+                            <div>
+                                <p class="text-zinc-600 dark:text-gray-400">
+                                    میزان کافئین : {{ products.caffeine_value }}
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-zinc-600 dark:text-gray-400">
+                                    خاستگاه : {{ products.birthplace }}
+                                </p>
+
+                            </div>
+                            <div>
+                                <p class="text-zinc-600 dark:text-gray-400">مواد تشکیل‌دهنده
+                                    : {{ products.make_with }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                        class="lg:mr-2 grid grid-cols-12 child:col-span-6 xl:child:col-span-3 gap-x-1 gap-y-2 lg:gap-4 child:border child:text-gray-400 child:dark:border-white/20 child:border-gray-200 child:rounded-lg child:h-12  child:p-2 child:flex child:items-center child:gap-x-1 lg:child:gap-x-2 child:text-sm lg:text-base">
+                    <span>
+                        <svg class="w-4 h-4 lg:w-6 lg:h-6">
+                            <use href="#arrow-path-rounded-square"></use>
+                        </svg>
+                        <p>ضمانت بازگشت کالا</p>
+                    </span>
+                    <span>
+                        <svg class="w-4 h-4 lg:w-6 lg:h-6">
+                            <use href="#check-badge"></use>
+                        </svg>
+                        <p>
+                            تضمین اصالت کالا
+                        </p>
+                    </span>
+                    <span>
+                        <svg class="w-4 h-4 lg:w-6 lg:h-6">
+                            <use href="#calender-day"></use>
+                        </svg>
+                        <p>پشتیبانی کل هفته</p>
+                    </span>
+                    <span>
+                        <svg class="w-4 h-4 lg:w-6 lg:h-6">
+                            <use href="#truke"></use>
+                        </svg>
+                        <p>ارسال به سراسر ایران </p>
+                    </span>
+                </div>
+                <div class="lg:mr-2">
+                    <h2 class="font-MorabbaMedium text-2xl pb-1 mb-2 ">معرفی محصول
+                    </h2>
+                    <p class="leading-10 text-gray-600 dark:text-gray-300">
+                        {{ products.description }}
+                    </p>
+                </div>
+            </div>
+            <!-- PRICE & ADD TO CART BOX -->
+            <div class="w-full lg:w-1/4 lg:sticky top-5 flex flex-col gap-y-6">
+                <!-- PRICE -->
+                <div class="flex items-center gap-x-1">
+                    <p class="text-2xl font-DanaDemiBold" id="unitPrice" data-price="{{ products.discount_price }}">
+                        {{ products.discount_price | floatformat | intcomma }}
+                    </p>
+                    <p>تومان</p>
+                </div>
+
+                <!-- تعداد -->
+                <button
+                        class="w-full flex items-center justify-between gap-x-1 rounded-lg border border-gray-200 dark:border-white/20 py-2 px-3">
+                    <svg class="w-6 h-6 increment text-green-600">
+                        <use href="#plus"></use>
+                    </svg>
+                    <input type="number" name="customInput" id="customInput" min="1" max="20" value="1"
+                           class="custom-input mr-4 text-lg bg-transparent">
+                    <svg class="w-6 h-6 decrement text-red-500">
+                        <use href="#minus"></use>
+                    </svg>
+                </button>
+
+                <!-- مجموع خرید -->
+                <button
+                        class="w-full flex items-center gap-x-1 justify-between dark:bg-zinc-800 dark:text-gray-400  bg-gray-100 transition-all rounded-lg py-2 px-2 xl:px-3 font-DanaMedium text-sm xl:text-base">
+                    <p>مجموع خرید :</p>
+                    <p id="totalPrice"> {{ products.discount_price|floatformat|intcomma }} تومان</p>
+                </button>
+
+
+                <div class="text-sm  text-gray-400 flex xl:items-center gap-x-1">
+                    <svg class="w-5 h-5">
+                        <use href="#info"></use>
+                    </svg>
+                    <p>ارسال رایگان برای خریدهای بالای 400 هزار تومان</p>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+{% endblock %}
+{% block script %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("customInput");
+            const totalPrice = document.getElementById("totalPrice");
+            const unitPrice = parseInt(document.getElementById("unitPrice").dataset.price);
+
+            function formatNumber(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            function updateTotal() {
+                const count = parseInt(input.value) || 1;
+                const total = count * unitPrice;
+                totalPrice.innerText = formatNumber(total) + " تومان";
+            }
+
+            input.addEventListener("change", updateTotal);
+            input.addEventListener("input", updateTotal);
+
+            document.querySelector(".increment").addEventListener("click", function () {
+                if (input.value < 20) {
+                    input.value = parseInt(input.value) + 1;
+                    updateTotal();
+                }
+            });
+
+            document.querySelector(".decrement").addEventListener("click", function () {
+                if (input.value > 1) {
+                    input.value = parseInt(input.value) - 1;
+                    updateTotal();
+                }
+            });
+
+            updateTotal(); // محاسبه اولیه
+        });
+    </script>
+
+{% endblock %}
+
+
