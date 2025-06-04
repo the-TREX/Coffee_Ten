@@ -20,13 +20,11 @@ class Categories(models.Model):
         return self.name
 
 
-
-
 class Products(models.Model):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name='products')
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='images/bestsellers/')
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     discount_percent = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
@@ -54,3 +52,7 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+
+        ordering = ['-created_at']

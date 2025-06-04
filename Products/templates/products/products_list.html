@@ -1,24 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %}
-    کافی تن | فروشگاه
-{% endblock %}
+{% block title %} کافی تن | فروشگاه {% endblock %}
 {% block content %}
-    <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+    <div
+            class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+    >
         {% for item in prod %}
-            <div class="group bg-white dark:bg-zinc-700 rounded-lg shadow overflow-hidden">
-
-                    <!-- PRODUCT IMAGE -->
+            <div
+                    class="group bg-white dark:bg-zinc-700 rounded-lg shadow overflow-hidden"
+            >
+                <!-- PRODUCT IMAGE -->
                 <a href="{% url 'products:detail_products' slug=item.slug %}">
-                    <img src="{{ item.image.url }}" alt="{{ item.name }}"
-                         class="group-hover:scale-105 duration-300 w-32 h-32 lg:w-48 lg:h-48 mx-auto mb-3 object-contain"/>
+                    <img
+                            src="{{ item.image.url }}"
+                            alt="{{ item.name }}"
+                            class="group-hover:scale-105 duration-300 w-32 h-32 lg:w-48 lg:h-48 mx-auto mb-3 object-contain"
+                    />
                 </a>
 
-                    <!-- PRODUCT MAIN -->
+                <!-- PRODUCT MAIN -->
                 <div class="px-2 lg:px-4 mb-3">
-                    <a href="{% url 'products:detail_products' slug=item.slug %}"
-                       class="line-clamp-2 font-DanaMedium mb-2 text-sm lg:text-base block">
+                    <a
+                            href="{% url 'products:detail_products' slug=item.slug %}"
+                            class="line-clamp-2 font-DanaMedium mb-2 text-sm lg:text-base block"
+                    >
                         {{ item.name }}
                     </a>
                     <div class="flex items-center gap-x-1 lg:gap-x-3">
@@ -33,16 +39,64 @@
                         {% endif %}
                     </div>
                 </div>
-
-                    <!-- PRODUCT FOOTER -->
+                <!-- PRODUCT FOOTER -->
                 <div class="flex items-center justify-start px-2 lg:px-4 mb-3">
-                <span class="rounded-full p-2 dark:bg-zinc-800 dark:hover:bg-green-500 bg-gray-100 hover:bg-green-600 hover:text-white transition-all duration-300">
-                    <svg class="w-4 h-4">
-                        <use href="#shopping-cart"></use>
-                    </svg>
-                </span>
+      <span
+              class="rounded-full p-2 dark:bg-zinc-800 dark:hover:bg-green-500 bg-gray-100 hover:bg-green-600 hover:text-white transition-all duration-300"
+      >
+        <svg class="w-4 h-4">
+          <use href="#shopping-cart"></use>
+        </svg>
+      </span>
                 </div>
             </div>
+
         {% endfor %}
     </div>
+
+    <!-- PAGINATION -->
+    <div class="mt-10 w-full flex items-center justify-center">
+        {% if prod.has_other_page %}
+            <ul
+                    class="flex items-center gap-x-3 child:flex child:items-center child:justify-center child:w-8 child:h-8 child:cursor-pointer child:shadow child:rounded-lg child:transition-all child:duration-300"
+            >
+                {# Previous Page #}
+                {% if prod.has_previous %}
+                    <li class="bg-white dark:bg-zinc-700 hover:bg-green-500 hover:text-white">
+                        <a href="?page={{ prod.previous_page_number }}">
+                            <svg class="w-5 h-5">
+                                <use href="#chevron-right"></use>
+                            </svg>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {# Page Numbers Loop - THIS IS THE FIXED PART #}
+                {% for item in prod.paginator.page_range %}
+                    {% if item == prod.number %}
+                        <li class="text-white bg-green-500 font-bold">
+                            <a href="?page={{ item }}">{{ item }}</a>
+                        </li>
+                    {% else %}
+                        <li class="bg-white dark:bg-zinc-700 hover:bg-green-500 hover:text-white">
+                            <a href="?page={{ item }}">{{ item }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {# Next Page #}
+                {% if prod.has_next %}
+                    <li class="bg-white dark:bg-zinc-700 hover:bg-green-500 hover:text-white">
+                        <a href="?page={{ prod.next_page_number }}">
+                            <svg class="w-5 h-5">
+                                <use href="#chevron-left"></use>
+                            </svg>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </div>
+
+
 {% endblock %}

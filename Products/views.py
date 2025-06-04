@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
-
 from .models import Categories, Products
-
+from django.core.paginator import Paginator
 
 def detail_products(request, slug):
     products = get_object_or_404(Products, slug=slug)
@@ -11,7 +10,10 @@ def detail_products(request, slug):
 
 def all_products(request):
     prod = Products.objects.all()
-    return render(request, "products/products_list.html", context={"prod": prod})
+    paginator = Paginator(prod, 2)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, "products/products_list.html", context={"prod": page_obj})
 
 
 def category_products(request, slug):
@@ -23,5 +25,7 @@ def category_products(request, slug):
         "prod": products,
         "cat": categories,
     })
+
+
 def about_us(request):
     return render(request, "products/about_us.html")

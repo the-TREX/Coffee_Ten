@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
     <style>
         body, html {
@@ -87,29 +86,95 @@
         ::placeholder {
             color: #555;
         }
+
+
+        .auth-message {
+            text-align: center;
+            margin-top: 50px;
+            font-family: 'Vazir', sans-serif;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .auth-links-wrapper {
+            text-align: center;
+        }
+
+        .auth-link {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 10px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+            color: white;
+            cursor: pointer;
+        }
+
+        .auth-link.login {
+            background-color: #007bff;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+        }
+
+        .auth-link.login:hover {
+            background-color: #0056b3;
+        }
+
+        .auth-link.register {
+            background-color: #28a745;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+        }
+
+        .auth-link.register:hover {
+            background-color: #1e7e34;
+        }
     </style>
+
+
+
+
 
     <div class="background-image"></div>
     <div class="background-blur"></div>
+    {% if request.user.is_authenticated %}
+        <div class="contact-form-wrapper">
+            <form method="post" class="glass-form">
+                <h2>نظر یا پیشنهاد خود را وارد کنید</h2>
+                {% csrf_token %}
 
-    <div class="contact-form-wrapper">
-        <form method="post" class="glass-form">
-            <h2>نظر یا پیشنهاد خود را وارد کنید</h2>
-            {% csrf_token %}
+                {{ form.username.errors }}
+                {{ form.username }}
 
-            {{ form.username.errors }}
-            {{ form.username }}
+                {{ form.email.errors }}
+                {{ form.email }}
 
-            {{ form.email.errors }}
-            {{ form.email }}
+                {{ form.subject.errors }}
+                {{ form.subject }}
 
-            {{ form.subject.errors }}
-            {{ form.subject }}
+                {{ form.message.errors }}
+                {{ form.message }}
 
-            {{ form.message.errors }}
-            {{ form.message }}
+                <button type="submit">ارسال پیام</button>
+            </form>
+        </div>
+    {% else %}
+        <div>
+            <p class="auth-message">
+                برای ارسال نظر باید ابتدا وارد حساب کاربری خود شوید یا ثبت نام کنید.
+            </p>
+            <div class="auth-links-wrapper">
+                <a href="{% url 'account:login' %}" class="auth-link login">
+                    ورود به حساب کاربری
+                </a>
+                <a href="{% url 'account:register' %}" class="auth-link register">
+                    ثبت نام
+                </a>
+            </div>
+        </div>
+    {% endif %}
 
-            <button type="submit">ارسال پیام</button>
-        </form>
-    </div>
+
 {% endblock %}
