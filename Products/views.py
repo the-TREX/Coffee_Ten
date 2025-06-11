@@ -16,8 +16,7 @@ class Detail_Product(DetailView):
     model = Products
     template_name = "products/product_detail.html"
     context_object_name = "products"
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
+
 
 
 class About_us(TemplateView):
@@ -31,7 +30,7 @@ class CategoryProductsView(ListView):
     paginate_by = 2  # تعداد محصولات در هر صفحه
 
     def get_queryset(self):
-        # گرفتن slug از url
+        # گرفتن slug از ur
         slug = self.kwargs.get('slug')
         # گرفتن دسته بندی مربوطه یا 404
         self.category = get_object_or_404(Categories, slug=slug)
