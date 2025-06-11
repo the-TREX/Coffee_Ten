@@ -25,22 +25,22 @@
 
             <!-- منوی اصلی -->
             <ul class="mt-2 flex items-center gap-x-4 lg:gap-x-10 font-DanaMedium lg:mr-30 xl:mr-32 child:z-30">
-                <li class="nav-item text-green-500">
+                <li class="nav-item {% if request.resolver_match.url_name == 'main' %} text-green-500{% endif %}">
                     <a href="{% url 'home:main' %}">صفحه اصلی</a>
                 </li>
 
                 <!-- آیتم فروشگاه -->
-                <li class="nav-item">
+                <li class="nav-item {% if request.resolver_match.url_name == 'shop' %} text-green-500{% endif %}">
                     <div class="flex items-center flex-row gap-x-1">
                         <a href="{% url 'products:shop' %}">فروشگاه</a>
                     </div>
                 </li>
 
 
-                <li class="nav-item">
+                <li class="nav-item {% if request.resolver_match.url_name == 'contact_us' %} text-green-500{% endif %}">
                     <a href="{% url 'account:contact_us' %}">تماس با ما</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if request.resolver_match.url_name == 'about' %} text-green-500{% endif %}">
                     <a href="{% url 'products:about' %}">درباره ما</a>
                 </li>
             </ul>

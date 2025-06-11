@@ -1,8 +1,8 @@
 from django.contrib import admin
 from .models import Categories, Products
 
-admin.site.register(Products)
 
+@admin.register(Products)
 
 @admin.register(Categories)
 class CategoryAdmin(admin.ModelAdmin):
