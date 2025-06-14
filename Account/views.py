@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from .forms import RegisterForm, UserEditForm, ContactForm
 from django.contrib import messages
+from .models import *
+from django.views.generic import FormView
 
 
 def user_register(request):
@@ -46,13 +48,23 @@ def user_edite(request):
     return render(request, "account/edit.html", {'form': form})
 
 
-def contact_us(request):
-    if request.method == "POST":
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "انتقاد شما با موفقیت ثبت گردید !")
-            return redirect("home:main")
-    else:
-        form = ContactForm()
-    return render(request, 'account/contact.html', {'form': form})
+# def contact_us(request):
+#     if request.method == "POST":
+#         form = ContactForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "انتقاد شما با موفقیت ثبت گردید !")
+#             return redirect("home:main")
+#     else:
+#         form = ContactForm()
+#     return render(request, 'account/contact.html', {'form': form})
+
+class ContactView(FormView):
+    template_name = 'account/contact.html'
+    form_class = ContactForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        form_data = form.cleaned_data # یه دیکشنری شامل داده‌های فرم هست بعد از اعتبارسنجی
+        Contact.objects.create(**form_data)
+        return super().form_valid(form)

@@ -95,24 +95,24 @@
     </div>
 
     <!-- PAGINATION -->
-    {% if prod.has_other_pages %}
+    {% if page_obj.has_other_pages %}
         <div class="pagination">
-            {% if prod.has_previous %}
-                <a href="?page={{ prod.previous_page_number }}">◀</a>
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">◀</a>
             {% else %}
                 <span class="disabled">◀</span>
             {% endif %}
 
-            {% for i in prod.paginator.page_range %}
-                {% if i == prod.number %}
+            {% for i in page_obj.paginator.page_range %}
+                {% if i == page_obj.number %}
                     <span class="active">{{ i }}</span>
                 {% else %}
                     <a href="?page={{ i }}">{{ i }}</a>
                 {% endif %}
             {% endfor %}
 
-            {% if prod.has_next %}
-                <a href="?page={{ prod.next_page_number }}">▶</a>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">▶</a>
             {% else %}
                 <span class="disabled">▶</span>
             {% endif %}

@@ -8,6 +8,53 @@
 
 {% block content %}
 
+        <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 50px;
+            direction: ltr;
+        }
+
+        .pagination a, .pagination span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid #4CAF50;
+        }
+
+        .pagination a {
+            background-color: #1e1e1e;
+            color: #4CAF50;
+        }
+
+        .pagination a:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pagination .active {
+            background-color: #4CAF50;
+            color: white;
+            pointer-events: none;
+        }
+
+        .pagination .disabled {
+            background-color: #333;
+            color: #777;
+            border-color: #444;
+            cursor: not-allowed;
+        }
+    </style>
 
     <!-- محصولات مربوط به دسته‌بندی فعلی -->
     <h2 class="text-lg font-DanaBold mb-4 border-b pb-2 mt-10">
@@ -52,5 +99,29 @@
             </p>
         {% endfor %}
     </div>
+    <!-- PAGINATION -->
+    {% if page_obj.has_other_pages %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">◀</a>
+            {% else %}
+                <span class="disabled">◀</span>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+                {% if i == page_obj.number %}
+                    <span class="active">{{ i }}</span>
+                {% else %}
+                    <a href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">▶</a>
+            {% else %}
+                <span class="disabled">▶</span>
+            {% endif %}
+        </div>
+    {% endif %}
 
 {% endblock %}

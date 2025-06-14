@@ -5,21 +5,21 @@ from django.core.paginator import Paginator
 from django.views.generic import ListView, TemplateView, DetailView
 
 
-class All_Products(ListView):
+class ProductListView(ListView):
     model = Products
-    template_name = "products/products_list.html"
+    template_name = "products/templates/products/products_list.html"
     context_object_name = "prod"
     paginate_by = 2
 
 
-class Detail_Product(DetailView):
+class ProductDetailView(DetailView):
     model = Products
     template_name = "products/product_detail.html"
-    context_object_name = "products"
 
 
 
-class About_us(TemplateView):
+
+class AboutusView(TemplateView):
     template_name = "products/about_us.html"
 
 
@@ -29,8 +29,8 @@ class CategoryProductsView(ListView):
     context_object_name = "prod"
     paginate_by = 2  # تعداد محصولات در هر صفحه
 
-    def get_queryset(self):
-        # گرفتن slug از ur
+    def get_queryset(self): # یه جورایی همون فلیتر ککنده data هست
+        # گرفتن slug از url
         slug = self.kwargs.get('slug')
         # گرفتن دسته بندی مربوطه یا 404
         self.category = get_object_or_404(Categories, slug=slug)
@@ -40,5 +40,7 @@ class CategoryProductsView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category'] = self.category
-        context['cat'] = Categories.objects.all()  # برای نمایش همه دسته‌ها (مثل قبلی)
         return context
+
+
+
