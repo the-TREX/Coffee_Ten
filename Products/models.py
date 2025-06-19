@@ -1,10 +1,6 @@
-# from time import timezone
-
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
-
-
-# from Products.views import bestsellers
 
 
 class Categories(models.Model):
@@ -56,3 +52,13 @@ class Products(models.Model):
     class Meta:
 
         ordering = ['-created_at']
+
+
+class Comment(models.Model):
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    title = models.CharField(max_length=100)
+    suggested = models.BooleanField()
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now=False, null=False, blank=False)
+

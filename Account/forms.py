@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 from .models import Contact
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
+
+
+
 class RegisterForm(UserCreationForm):
     username = forms.CharField(required=True,
                                widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام کاربری'}), label='')
