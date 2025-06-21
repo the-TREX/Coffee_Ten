@@ -4,7 +4,7 @@ from .models import Categories, Products, Comment
 from django.core.paginator import Paginator
 from django.views.generic import ListView, TemplateView, DetailView, CreateView
 from django.urls import reverse, reverse_lazy
-
+# from .forms import CommentForm
 
 class ProductListView(ListView):
     model = Products
@@ -19,21 +19,21 @@ class ProductDetailView(DetailView):
     context_object_name = "products"
 
 
-class CommentProductListView(ListView):
-    model = Comment
-    template_name = "products/product_detail.html"
-    context_object_name = "comment"
-
-
-
-class CommentSaveView(CreateView):
-    model = Comment
-    template_name = "products/product_detail.html"
-    context_object_name = "message"
-    def form_valid(self, form):
-        form_data = form.cleaned_data
-        Comment.objects.create(**form_data)
-        return super(CommentSaveView, self).form_valid(form)
+# class CommentProductListView(ListView):
+#     model = Comment
+#     template_name = "products/product_detail.html"
+#     context_object_name = "comments"
+#
+#
+#
+# class CommentSaveView(CreateView):
+#     model = Comment
+#     template_name = "products/product_detail.html"
+#     context_object_name = "message"
+#     def form_valid(self, form):
+#         form_data = form.cleaned_data
+#         Comment.objects.create(**form_data)
+#         return super(CommentSaveView, self).form_valid(form)
 
 
 class AboutusView(TemplateView):

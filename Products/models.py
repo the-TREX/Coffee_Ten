@@ -61,4 +61,3 @@ class Comment(models.Model):
     suggested = models.BooleanField()
     body = models.TextField()
     created_at = models.DateTimeField(auto_now=False, null=False, blank=False)
-
