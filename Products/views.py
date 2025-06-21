@@ -3,6 +3,7 @@ from django.utils.text import slugify
 from .models import Categories, Products
 from django.core.paginator import Paginator
 
+
 def detail_products(request, slug):
     products = get_object_or_404(Products, slug=slug)
     return render(request, "products/product_detail.html", context={"products": products, 'all_products': all_products})
