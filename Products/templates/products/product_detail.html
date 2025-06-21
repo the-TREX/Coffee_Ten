@@ -165,111 +165,111 @@
             </div>
         </section>
 
-{#        <!-- COMMENTS -->#}
-{#        <section class="w-full rounded-lg bg-white dark:bg-zinc-700 shadow p-5">#}
-{#            <div class="flex items-center gap-x-2 mb-6">#}
-{#                <h2 class="font-MorabbaMedium text-2xl ">#}
-{#                    دیدگاه ها#}
-{#                </h2>#}
-{#                <p class="text-sm text-blue-500">#}
-{#                    ({{ message.count }} دیدگاه)#}
-{#                </p>#}
-{#            </div>#}
-{#            <form method="post">#}
-{#                <div class="flex flex-col lg:flex-row items-start gap-10">#}
-{#                    <!-- SUBMIT COMMENT -->#}
-{#                    {% csrf_token %}#}
-{#                    <div class="lg:w-1/4 flex flex-col w-full ">#}
-{#                        <p class="font-DanaMedium text-lg mb-2">ثبت دیدگاه</p>#}
-{#                        <input type="text" placeholder="عنوان" class="tailwind-input" name="title" id="title">#}
-{##}
-{#                        <p class="text-gray-500 dark:text-white text-sm mb-4">این محصول را به دیگران پیشنهاد : </p>#}
-{#                        <div class="grid grid-cols-12 child:col-span-6 gap-4 child:w-full  child:flex child:items-center child:justify-center child:gap-x-2 child:rounded-lg child:shadow child:py-2 mb-5 child:font-DanaMedium child:duration-300#}
-{#                        child:transition-all">#}
-{#                            <button#}
-{#                                    class="text-green-600 ring-transparent ring-1 focus:ring-green-600 dark:ring-white/20 dark:focus:ring-green-600">#}
-{#                                <svg class="w-5 h-5">#}
-{#                                    <use href="#hand-up"></use>#}
-{#                                </svg>#}
-{#                                میکنم#}
-{#                            </button>#}
-{#                            <button#}
-{#                                    class="text-red-500 ring-transparent ring-1 focus:ring-[#EF4343] dark:ring-white/20 dark:focus:ring-[#EF4343]">#}
-{#                                <svg class="w-5 h-5">#}
-{#                                    <use href="#hand-down"></use>#}
-{#                                </svg>#}
-{#                                نمیکنم#}
-{#                            </button>#}
-{#                        </div>#}
-{#                        <textarea class="h-24 tailwind-input" placeholder="متن دیدگاه" name="body" id="body"></textarea>#}
-{#                        <button class="rounded-lg p-2 bg-green-500 hover:bg-green-600 text-white transition-all"#}
-{#                                type="submit">ثبت#}
-{#                        </button>#}
-{#                    </div>#}
-{##}
-{##}
-{#                    <!-- ALL COMMENTS -->#}
-{#                    {% for com in comments %}#}
-{#                        <ul class="lg:w-3/4 flex flex-col gap-y-2 child:w-full  ">#}
-{##}
-{#                            <!-- COMMENT ITEMS -->#}
-{#                            <li class="child:flex py-4 border-b border-gray-200 child:border-white/20">#}
-{#                                <!-- TITLE -->#}
-{#                                <div class="flex items-center gap-x-2">#}
-{#                                    <h2 class="font-DanaMedium text-lg mb-1">{{ com.title }}</h2>#}
-{#                                    <span class="px-2 py-1 mb-2 rounded-lg bg-green-500 text-white text-xs">خریدار</span>#}
-{#                                </div>#}
-{#                                <!-- COMMENT TEXT -->#}
-{#                                <div class="flex-col">#}
-{##}
-{#                                    <h2 class="flex items-center gap-x-1 text-green-500 mb-4">#}
-{#                                        <svg class="w-4 h-4">#}
-{#                                            <use href="#hand-up"></use>#}
-{#                                        </svg>#}
-{#                                        پیشنهاد میشود#}
-{#                                    </h2>#}
-{##}
-{#                                    <h2 class="flex items-center gap-x-1 text-red-500 mb-4">#}
-{#                                        <svg class="w-4 h-4">#}
-{#                                            <use href="#hand-down"></use>#}
-{#                                        </svg>#}
-{#                                        پیشنهاد نمیشود#}
-{#                                    </h2>#}
-{#                                    <p class="text-gray-500 dark:text-gray-200 mb-2 line-clamp-2">{{ com.body }}</p>#}
-{#                                </div>#}
-{#                                <!-- COMMENT FOOTER -->#}
-{#                                <div class="mt-2 lg:mt-0 flex-col lg:flex-row gap-y-2 lg:items-center justify-between">#}
-{#                                    <div class="flex items-center gap-x-4 text-gray-400 text-sm">#}
-{#                                        <p>{{ com.created_at }}</p>#}
-{#                                        <p>{{ com.user }}</p>#}
-{#                                    </div>#}
-{#                                    <div class="flex items-center gap-x-2 flex-wrap mt-2">#}
-{#                                        <p class="text-gray-400 text-sm">آیا این دیدگاه برایتان مفید بود؟</p>#}
-{#                                        <div class="flex items-center gap-x-2 child:flex child:items-center child:gap-x-1 child:rounded-lg child:p-2 child:font-DanaMedium child:duration-300#}
-{#                                child:transition-all child:text-sm">#}
-{#                                            <button#}
-{#                                                    class="text-green-600 ring-transparent ring-1 focus:ring-green-600  dark:focus:ring-green-600">#}
-{#                                                78#}
-{#                                                <svg class="w-4 h-4">#}
-{#                                                    <use href="#hand-up"></use>#}
-{#                                                </svg>#}
-{#                                            </button>#}
-{#                                            <button#}
-{#                                                    class="text-red-500 ring-transparent ring-1 focus:ring-[#EF4343]  dark:focus:ring-[#EF4343]">#}
-{#                                                25#}
-{#                                                <svg class="w-4 h-4">#}
-{#                                                    <use href="#hand-down"></use>#}
-{#                                                </svg>#}
-{#                                            </button>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </li>#}
-{#                        </ul>#}
-{#                    {% endfor %}#}
-{#                </div>#}
-{#            </form>#}
-{#        </section>#}
+        {#        <!-- COMMENTS -->#}
+        {#        <section class="w-full rounded-lg bg-white dark:bg-zinc-700 shadow p-5">#}
+        {#            <div class="flex items-center gap-x-2 mb-6">#}
+        {#                <h2 class="font-MorabbaMedium text-2xl ">#}
+        {#                    دیدگاه ها#}
+        {#                </h2>#}
+        {#                <p class="text-sm text-blue-500">#}
+        {#                    ({{ message.count }} دیدگاه)#}
+        {#                </p>#}
+        {#            </div>#}
+        {#            <form method="post">#}
+        {#                <div class="flex flex-col lg:flex-row items-start gap-10">#}
+        {#                    <!-- SUBMIT COMMENT -->#}
+        {#                    {% csrf_token %}#}
+        {#                    <div class="lg:w-1/4 flex flex-col w-full ">#}
+        {#                        <p class="font-DanaMedium text-lg mb-2">ثبت دیدگاه</p>#}
+        {#                        <input type="text" placeholder="عنوان" class="tailwind-input" name="title" id="title">#}
+        {##}
+        {#                        <p class="text-gray-500 dark:text-white text-sm mb-4">این محصول را به دیگران پیشنهاد : </p>#}
+        {#                        <div class="grid grid-cols-12 child:col-span-6 gap-4 child:w-full  child:flex child:items-center child:justify-center child:gap-x-2 child:rounded-lg child:shadow child:py-2 mb-5 child:font-DanaMedium child:duration-300#}
+        {#                        child:transition-all">#}
+        {#                            <button#}
+        {#                                    class="text-green-600 ring-transparent ring-1 focus:ring-green-600 dark:ring-white/20 dark:focus:ring-green-600">#}
+        {#                                <svg class="w-5 h-5">#}
+        {#                                    <use href="#hand-up"></use>#}
+        {#                                </svg>#}
+        {#                                میکنم#}
+        {#                            </button>#}
+        {#                            <button#}
+        {#                                    class="text-red-500 ring-transparent ring-1 focus:ring-[#EF4343] dark:ring-white/20 dark:focus:ring-[#EF4343]">#}
+        {#                                <svg class="w-5 h-5">#}
+        {#                                    <use href="#hand-down"></use>#}
+        {#                                </svg>#}
+        {#                                نمیکنم#}
+        {#                            </button>#}
+        {#                        </div>#}
+        {#                        <textarea class="h-24 tailwind-input" placeholder="متن دیدگاه" name="body" id="body"></textarea>#}
+        {#                        <button class="rounded-lg p-2 bg-green-500 hover:bg-green-600 text-white transition-all"#}
+        {#                                type="submit">ثبت#}
+        {#                        </button>#}
+        {#                    </div>#}
+        {##}
+        {##}
+        {#                    <!-- ALL COMMENTS -->#}
+        {#                    {% for com in comments %}#}
+        {#                        <ul class="lg:w-3/4 flex flex-col gap-y-2 child:w-full  ">#}
+        {##}
+        {#                            <!-- COMMENT ITEMS -->#}
+        {#                            <li class="child:flex py-4 border-b border-gray-200 child:border-white/20">#}
+        {#                                <!-- TITLE -->#}
+        {#                                <div class="flex items-center gap-x-2">#}
+        {#                                    <h2 class="font-DanaMedium text-lg mb-1">{{ com.title }}</h2>#}
+        {#                                    <span class="px-2 py-1 mb-2 rounded-lg bg-green-500 text-white text-xs">خریدار</span>#}
+        {#                                </div>#}
+        {#                                <!-- COMMENT TEXT -->#}
+        {#                                <div class="flex-col">#}
+        {##}
+        {#                                    <h2 class="flex items-center gap-x-1 text-green-500 mb-4">#}
+        {#                                        <svg class="w-4 h-4">#}
+        {#                                            <use href="#hand-up"></use>#}
+        {#                                        </svg>#}
+        {#                                        پیشنهاد میشود#}
+        {#                                    </h2>#}
+        {##}
+        {#                                    <h2 class="flex items-center gap-x-1 text-red-500 mb-4">#}
+        {#                                        <svg class="w-4 h-4">#}
+        {#                                            <use href="#hand-down"></use>#}
+        {#                                        </svg>#}
+        {#                                        پیشنهاد نمیشود#}
+        {#                                    </h2>#}
+        {#                                    <p class="text-gray-500 dark:text-gray-200 mb-2 line-clamp-2">{{ com.body }}</p>#}
+        {#                                </div>#}
+        {#                                <!-- COMMENT FOOTER -->#}
+        {#                                <div class="mt-2 lg:mt-0 flex-col lg:flex-row gap-y-2 lg:items-center justify-between">#}
+        {#                                    <div class="flex items-center gap-x-4 text-gray-400 text-sm">#}
+        {#                                        <p>{{ com.created_at }}</p>#}
+        {#                                        <p>{{ com.user }}</p>#}
+        {#                                    </div>#}
+        {#                                    <div class="flex items-center gap-x-2 flex-wrap mt-2">#}
+        {#                                        <p class="text-gray-400 text-sm">آیا این دیدگاه برایتان مفید بود؟</p>#}
+        {#                                        <div class="flex items-center gap-x-2 child:flex child:items-center child:gap-x-1 child:rounded-lg child:p-2 child:font-DanaMedium child:duration-300#}
+        {#                                child:transition-all child:text-sm">#}
+        {#                                            <button#}
+        {#                                                    class="text-green-600 ring-transparent ring-1 focus:ring-green-600  dark:focus:ring-green-600">#}
+        {#                                                78#}
+        {#                                                <svg class="w-4 h-4">#}
+        {#                                                    <use href="#hand-up"></use>#}
+        {#                                                </svg>#}
+        {#                                            </button>#}
+        {#                                            <button#}
+        {#                                                    class="text-red-500 ring-transparent ring-1 focus:ring-[#EF4343]  dark:focus:ring-[#EF4343]">#}
+        {#                                                25#}
+        {#                                                <svg class="w-4 h-4">#}
+        {#                                                    <use href="#hand-down"></use>#}
+        {#                                                </svg>#}
+        {#                                            </button>#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                </div>#}
+        {#                            </li>#}
+        {#                        </ul>#}
+        {#                    {% endfor %}#}
+        {#                </div>#}
+        {#            </form>#}
+        {#        </section>#}
     </main>
 {% endblock %}
 {% block script %}

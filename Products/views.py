@@ -4,6 +4,8 @@ from .models import Categories, Products, Comment
 from django.core.paginator import Paginator
 from django.views.generic import ListView, TemplateView, DetailView, CreateView
 from django.urls import reverse, reverse_lazy
+
+
 # from .forms import CommentForm
 
 class ProductListView(ListView):
