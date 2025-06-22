@@ -79,7 +79,7 @@
                                 </svg>
                                 لیست پیام ها
                             </a>
-                            <a href="{% url 'account:edit_profile' %}"
+                            <a href="{% url 'account:edit_profile' user.pk %}"
                                class="flex items-center gap-x-3 w-full hover:bg-green-500/20 hover:text-green-500 rounded">
                                 <svg class="h-5 w-5">
                                     <use href="#cog"></use>
