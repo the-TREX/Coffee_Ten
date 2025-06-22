@@ -9,3 +9,7 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.subject
+
+    class Meta:
+        verbose_name = "ارتباط باما"
+        verbose_name_plural = "ارتباط باما"
