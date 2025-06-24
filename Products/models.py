@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.html import format_html
 from django.utils.text import slugify
 
 
@@ -38,6 +39,10 @@ class Products(models.Model):
     make_with = models.CharField(max_length=50, null=True, blank=True, verbose_name="مواد تشکیل‌دهنده")
     description = models.TextField(null=True, blank=True, verbose_name="توضیحات محصول")
 
+    def show_image(self):
+        if self.image:
+            return format_html(f'<img src="{self.image.url}" width="100" height="100"/>')
+        return format_html('<h3 style="color : red ;">تصویر ندارد</h3>')
     def save(self, *args, **kwargs):
         if not self.slug:  # barasi khali bodan slug
             base_slug = slugify(self.name)  # ye function ke slug ro standard mikone --> coffee-ten
@@ -51,6 +56,8 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+
 
     class Meta:
         ordering = ['-created_at']
