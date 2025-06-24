@@ -4,7 +4,7 @@ from django.utils.text import slugify
 
 
 class Categories(models.Model):
-    name = models.CharField(max_length=100 , verbose_name="نام دسته بندی")
+    name = models.CharField(max_length=100, verbose_name="نام دسته بندی")
     image = models.ImageField(upload_to='images/category/', verbose_name="تصویر")
     slug = models.SlugField(unique=True, verbose_name="اسلاگ", null=True, blank=True)
 
@@ -17,15 +17,18 @@ class Categories(models.Model):
 
 
 class Products(models.Model):
-    category = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name='products', verbose_name="نام دسته بندی")
+    category = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name='products',
+                                 verbose_name="نام دسته بندی")
     name = models.CharField(max_length=100, verbose_name="نام محصول")
     image = models.ImageField(upload_to='images/bestsellers/', verbose_name="تصویر محصول")
-    slug = models.SlugField(max_length=100, unique=True, null=True, blank=True , verbose_name="اسلاگ")
+    slug = models.SlugField(max_length=100, unique=True, null=True, blank=True, verbose_name="اسلاگ")
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="قیمت اصلی")
-    discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="قیمت تخفیف")
+    discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True,
+                                         verbose_name="قیمت تخفیف")
     discount_percent = models.PositiveSmallIntegerField(default=0, null=True, blank=True, verbose_name="درصد تخفیف")
     rating = models.PositiveSmallIntegerField(default=0, verbose_name="امتیاز کاربر")
-    created_at = models.DateTimeField(auto_now=False, null=False, blank=False, verbose_name="تاریخ ثبت محصول")  # we are use it for new products
+    created_at = models.DateTimeField(auto_now=False, null=False, blank=False,
+                                      verbose_name="تاریخ ثبت محصول")  # we are use it for new products
     is_bestseller = models.BooleanField(default=False, verbose_name="پرفروش")
     is_offer = models.BooleanField(default=False, verbose_name="دارای تخفیف")  # barasi offer bodan prosuct
     offer_expiration = models.DateTimeField(null=True, blank=True, verbose_name="تاریخ اتمام تخفیف")  # end time of
