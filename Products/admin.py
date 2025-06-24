@@ -27,9 +27,9 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'breed' , 'show_image']
+    list_display = ['name', 'created_at', 'breed', 'show_image']
     list_filter = ['breed', 'created_at']
-    list_editable = ['breed',]
+    list_editable = ['breed', ]
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name',)
 

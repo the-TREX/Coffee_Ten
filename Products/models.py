@@ -43,6 +43,7 @@ class Products(models.Model):
         if self.image:
             return format_html(f'<img src="{self.image.url}" width="100" height="100"/>')
         return format_html('<h3 style="color : red ;">تصویر ندارد</h3>')
+
     def save(self, *args, **kwargs):
         if not self.slug:  # barasi khali bodan slug
             base_slug = slugify(self.name)  # ye function ke slug ro standard mikone --> coffee-ten
@@ -56,8 +57,6 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
-
-
 
     class Meta:
         ordering = ['-created_at']

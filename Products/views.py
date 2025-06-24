@@ -1,6 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormMixin
 from .models import Categories, Products, Comment
-from django.views.generic import ListView, TemplateView, DetailView, CreateView
+from django.views.generic import ListView, TemplateView, DetailView, CreateView, View
+from .forms import *
 
 
 class ProductListView(ListView):
@@ -10,13 +14,43 @@ class ProductListView(ListView):
     paginate_by = 2
 
 
-class ProductDetailView(DetailView):
-    model = Products
-    template_name = "products/product_detail.html"
-    context_object_name = "products"
+from django.views import View
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Products, Comment
+from .forms import CommentForm
+from django.utils import timezone
 
 
-class AboutusView(TemplateView):
+class ProductDetailView(View):
+    def get(self, request, slug):
+        product = get_object_or_404(Products, slug=slug)
+        comments = product.comments.all().order_by('-created_at')
+        form = CommentForm()
+        return render(request, 'products/product_detail.html', {
+            'products': product,
+            'comments': comments,
+            'form': form
+        })
+
+    def post(self, request, slug):
+        product = get_object_or_404(Products, slug=slug)
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.product = product
+            comment.user = request.user
+            comment.created_at = timezone.now()
+            comment.save()
+            return redirect('products:detail_products', slug=slug)
+        comments = product.comments.all().order_by('-created_at')
+        return render(request, 'products/product_detail.html', {
+            'products': product,
+            'comments': comments,
+            'form': form
+        })
+
+
+class AboutUsView(TemplateView):
     template_name = "products/about_us.html"
 
 
