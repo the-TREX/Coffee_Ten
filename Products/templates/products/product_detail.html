@@ -5,6 +5,137 @@
     {{ detail_pro.name }}
 {% endblock %}
 {% block content %}
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Vazir', sans-serif;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("{% static 'Images/bg_ten_coffee.png' %}") no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+        }
+
+        .background-blur {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+
+        .contact-form-wrapper {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            color: #fff;
+            text-align: center;
+        }
+
+        .glass-form h2 {
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .glass-form input,
+        .glass-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            color: #000;
+        }
+
+        .glass-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .glass-form button:hover {
+            background-color: #0056b3;
+        }
+
+        ::placeholder {
+            color: #555;
+        }
+
+
+        .auth-message {
+            text-align: center;
+            margin-top: 50px;
+            font-family: 'Vazir', sans-serif;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .auth-links-wrapper {
+            text-align: center;
+        }
+
+        .auth-link {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 10px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+            color: white;
+            cursor: pointer;
+        }
+
+        .auth-link.login {
+            background-color: #007bff;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+        }
+
+        .auth-link.login:hover {
+            background-color: #0056b3;
+        }
+
+        .auth-link.register {
+            background-color: #28a745;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+        }
+
+        .auth-link.register:hover {
+            background-color: #1e7e34;
+        }
+    </style>
     <main class="container child:mt-8">
         <!-- Breadcrumbs -->
         <section>
@@ -177,19 +308,36 @@
 
             <div class="flex flex-col lg:flex-row items-start gap-10">
                 <!-- SUBMIT COMMENT -->
-
-                <div class="lg:w-1/4 flex flex-col w-full ">
-                    <form method="post" enctype="multipart/form-data" name="comment_form">
-                        {% csrf_token %}
-                        <p class="font-DanaMedium text-lg mb-2">ثبت دیدگاه</p>
-                        <input type="text" placeholder="عنوان" class="tailwind-input" name="title" id="title">
-                        <br>
-                        <textarea class="h-24 tailwind-input" placeholder="متن دیدگاه" name="body" id="body"></textarea>
-                        <button
-                                class="rounded-lg p-2) bg-green-500 hover:bg-green-600 text-white transition-all">ثبت
-                        </button>
-                    </form>
-                </div>
+                {% if request.user.is_authenticated %}
+                    <div class="lg:w-1/4 flex flex-col w-full ">
+                        <form method="post" enctype="multipart/form-data" name="comment_form">
+                            {% csrf_token %}
+                            <p class="font-DanaMedium text-lg mb-2">ثبت دیدگاه</p>
+                            <input type="text" placeholder="عنوان" class="tailwind-input" name="title" id="title">
+                            <br>
+                            <textarea class="h-24 tailwind-input" placeholder="متن دیدگاه" name="body"
+                                      id="body"></textarea>
+                            <button
+                                    class="rounded-lg p-2) bg-green-500 hover:bg-green-600 text-white transition-all">
+                                ثبت
+                            </button>
+                        </form>
+                    </div>
+                {% else %}
+                    <div>
+                        <p class="auth-message">
+                            برای ارسال نظر باید ابتدا وارد حساب کاربری خود شوید یا ثبت نام کنید.
+                        </p>
+                        <div class="auth-links-wrapper">
+                            <a href="{% url 'account:login' %}" class="auth-link login">
+                                ورود به حساب کاربری
+                            </a>
+                            <a href="{% url 'account:register' %}" class="auth-link register">
+                                ثبت نام
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
                 <!-- ALL COMMENTS -->
                 <ul class="lg:w-3/4 flex flex-col gap-y-2 child:w-full  ">
                     <!-- COMMENT ITEMS -->
@@ -211,26 +359,6 @@
                                     <p>{{ comment.created_at }}</p>
                                     <p>{{ comment.user.username }}</p>
                                 </div>
-                                {#                            <div class="flex items-center gap-x-2 flex-wrap mt-2">#}
-                                {#                                <p class="text-gray-400 text-sm">آیا این دیدگاه برایتان مفید بود؟</p>#}
-                                {#                                <div class="flex items-center gap-x-2 child:flex child:items-center child:gap-x-1 child:rounded-lg child:p-2 child:font-DanaMedium child:duration-300#}
-                                {#                                child:transition-all child:text-sm">#}
-                                {#                                    <button#}
-                                {#                                            class="text-green-600 ring-transparent ring-1 focus:ring-green-600  dark:focus:ring-green-600">#}
-                                {#                                        78#}
-                                {#                                        <svg class="w-4 h-4">#}
-                                {#                                            <use href="#hand-up"></use>#}
-                                {#                                        </svg>#}
-                                {#                                    </button>#}
-                                {#                                    <button#}
-                                {#                                            class="text-red-500 ring-transparent ring-1 focus:ring-[#EF4343]  dark:focus:ring-[#EF4343]">#}
-                                {#                                        25#}
-                                {#                                        <svg class="w-4 h-4">#}
-                                {#                                            <use href="#hand-down"></use>#}
-                                {#                                        </svg>#}
-                                {#                                    </button>#}
-                                {#                                </div>#}
-                                {#                            </div>#}
                             </div>
                         </li>
                     {% endfor %}
