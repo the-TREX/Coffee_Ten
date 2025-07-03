@@ -260,7 +260,7 @@
             <div class="w-full lg:w-1/4 lg:sticky top-5 flex flex-col gap-y-6">
                 <!-- PRICE -->
                 <div class="flex items-center gap-x-1">
-                    <p class="text-2xl font-DanaDemiBold" id="unitPrice" data-price="{{ products.discount_price }}">
+                    <p class="text-2xl font-DanaDemiBold" id="unitPrice" data-price="{{ products.discount_price |floatformat | intcomma }}">
                         {{ products.discount_price | floatformat | intcomma }}
                     </p>
                     <p>تومان</p>

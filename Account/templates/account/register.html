@@ -139,22 +139,30 @@
                 <div class="error-message">{{ error }}</div>
             {% endfor %}
 
-            <!-- Username -->
+            <!-- Email -->
             {{ form.email }}
             {% for error in form.email.errors %}
                 <div class="error-message">{{ error }}</div>
             {% endfor %}
 
+            <!-- Phone -->
+            {{ form.phone }}
+            {% for error in form.phone.errors %}
+                <div class="error-message">{{ error }}</div>
+            {% endfor %}
+
+            <!-- Password -->
             {{ form.password1 }}
             {% for error in form.password1.errors %}
                 <div class="error-message">{{ error }}</div>
             {% endfor %}
 
+            <!-- Repeat Password -->
             {{ form.password2 }}
             {% for error in form.password2.errors %}
                 <div class="error-message">{{ error }}</div>
             {% endfor %}
-            {#            {{ form.as_table }}#}
+
         </div>
         <button type="submit">ثبت نام</button>
     </form>

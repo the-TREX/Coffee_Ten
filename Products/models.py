@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.html import format_html
 from django.utils.text import slugify
 
+import Account.models
+
 
 class Categories(models.Model):
     name = models.CharField(max_length=100, verbose_name="نام دسته بندی")
@@ -66,7 +68,7 @@ class Products(models.Model):
 
 class Comment(models.Model):
     product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(Account.models.User, on_delete=models.CASCADE, related_name='comments')
     title = models.CharField(max_length=100)
     suggested = models.BooleanField()
     body = models.TextField()
