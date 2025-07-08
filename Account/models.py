@@ -41,8 +41,8 @@ class UserManager(BaseUserManager):
         birth and password.
         """
         user = self.create_user(
-            email,
             username,
+            email,
             password=password,
             phone=phone,
         )
@@ -58,7 +58,7 @@ class User(AbstractBaseUser):
         unique=True,
     )
     username = models.CharField(max_length=30, verbose_name="نام کاربری")
-    phone = models.IntegerField(unique=True, verbose_name="تلفن همراه")
+    phone = models.CharField(max_length=15, unique=True, verbose_name="تلفن همراه")
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
