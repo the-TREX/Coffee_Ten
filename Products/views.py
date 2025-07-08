@@ -13,6 +13,24 @@ class ProductListView(ListView):
     context_object_name = "prod"
     paginate_by = 8
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        sort = self.request.GET.get('sort')
+
+        if sort == 'popular':
+
+            queryset = queryset.order_by('-rating')
+        elif sort == 'best_selling':
+
+            queryset = queryset.order_by('-is_bestseller')
+        elif sort == 'cheapest':
+
+            queryset = queryset.order_by('discount_price', 'price')
+        elif sort == 'expensive':
+            queryset = queryset.order_by('-discount_price', '-price')
+
+        return queryset
+
 
 class ProductDetailView(View):
     def get(self, request, slug):
@@ -52,7 +70,7 @@ class CategoryProductsView(ListView):
     model = Products
     template_name = "products/category.html"
     context_object_name = "prod"
-    paginate_by = 2  # تعداد محصولات در هر صفحه
+    paginate_by = 8  # تعداد محصولات در هر صفحه
 
     def get_queryset(self):
         slug = self.kwargs.get('slug')

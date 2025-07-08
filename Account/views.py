@@ -15,6 +15,7 @@ class UserRegisterView(CreateView):
     success_url = '/'
 
 
+
 class UserLoginView(View):  # OK
     def get(self, request):
         form = LoginForm()
