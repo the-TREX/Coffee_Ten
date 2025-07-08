@@ -57,15 +57,15 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    username = models.CharField(max_length=30)
-    phone = models.IntegerField()
+    username = models.CharField(max_length=30, verbose_name="نام کاربری")
+    phone = models.IntegerField(unique=True, verbose_name="تلفن همراه")
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     objects = UserManager()
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["phone"]
+    USERNAME_FIELD = "phone"
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.email

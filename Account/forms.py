@@ -4,13 +4,19 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from .models import Contact
 from django import forms
+from django.core import validators
+
 
 from Account.models import User
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    phone = forms.CharField(required=True,
+                            widget=forms.NumberInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه'}), label='',
+                            help_text='09...', validators=[validators.MaxLengthValidator(11)])
+    password = forms.CharField(required=True,
+                               widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
+                               label='')
 
 
 class RegisterForm(UserCreationForm):
@@ -20,13 +26,13 @@ class RegisterForm(UserCreationForm):
                              label='')
     phone = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه'}), label='',
-                            help_text='09...', min_length=11, max_length=11)
+                            help_text='09...', validators=[validators.MaxLengthValidator(11)])
     password1 = forms.CharField(required=True,
                                 widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
                                 label='')
     password2 = forms.CharField(required=True,
                                 widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'تکرار رمز عبور'}),
-                                label='')
+                                label='', validators=[validators.MaxLengthValidator(11)])
 
     class Meta:
         model = User  # dare mige toye kodam model save she

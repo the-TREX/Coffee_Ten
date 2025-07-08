@@ -16,23 +16,21 @@ class UserRegisterView(CreateView):
 
 
 class UserLoginView(View):  # OK
-    form_class = LoginForm
-    template_name = 'account/login.html'
-
     def get(self, request):
-        form = self.form_class()
+        form = LoginForm()
         return render(request, 'account/login.html', {'form': form})
 
     def post(self, request):
-        form = self.form_class(request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            user = authenticate(username=form.cleaned_data['phone'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
                 return redirect('/')
             else:
-                return render(request, 'account/login.html', {'error': 'نام کاربری یا رمز عبور اشتباه است'})
-        return render(request, self.template_name, {'form': form})
+                form.add_error(None, 'نام کاربری یا رمز عبور اشتباه است')
+
+        return render(request, 'account/login.html', {'form': form})
 
 
 def user_logout(request):

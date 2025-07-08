@@ -50,74 +50,347 @@
             border-color: #444;
             cursor: not-allowed;
         }
+
+        /* Filter sidebar styles */
+        .filter-sidebar {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.75rem;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .filter-clear {
+            color: #10b981;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .filter-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-section-title {
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-checkbox {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid #d1d5db;
+        }
+
+        .price-range {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .price-inputs {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .price-input {
+            width: 45%;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #10b981;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
     </style>
 
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Filter Sidebar -->
+            <div class="lg:w-1/4">
+                <div class="filter-sidebar dark:bg-zinc-700">
+                    <div class="filter-header">
+                        <h3 class="filter-title dark:text-white">فیلترها</h3>
+                        <span class="filter-clear">حذف همه</span>
+                    </div>
 
-    <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {% for item in prod %}
-            <div class="group bg-white dark:bg-zinc-700 rounded-lg shadow overflow-hidden">
-                <!-- PRODUCT IMAGE -->
-                <a href="{% url 'products:detail_products' slug=item.slug %}">
-                    <img src="{{ item.image.url }}"
-                         alt="{{ item.name }}"
-                         class="group-hover:scale-105 duration-300 w-32 h-32 lg:w-48 lg:h-48 mx-auto mb-3 object-contain"/>
-                </a>
+                    <!-- Categories Filter -->
+                    <div class="filter-section">
+                        <div class="filter-section-title dark:text-white">
+                            <span>دسته‌بندی</span>
+                            <svg class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="filter-options">
+                            {% for category in categories %}
+                                <label class="filter-option dark:text-gray-300">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span>{{ category.name }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
 
-                <!-- PRODUCT MAIN -->
-                <div class="px-2 lg:px-4 mb-3">
-                    <a href="{% url 'products:detail_products' slug=item.slug %}"
-                       class="line-clamp-2 font-DanaMedium mb-2 text-sm lg:text-base block">
-                        {{ item.name }}
-                    </a>
-                    <div class="flex items-center gap-x-1 lg:gap-x-3">
-                        <p class="font-DanaDemiBold text-green-600 dark:text-green-500">
-                            {{ item.discount_price|floatformat:0|intcomma }}
-                            <span class="font-Dana text-sm">تومان</span>
-                        </p>
-                        {% if item.price > item.discount_price %}
-                            <del class="text-xs text-rose-400 font-Dana">
-                                {{ item.price|floatformat:0|intcomma }}
-                            </del>
-                        {% endif %}
+                    <!-- Brand Filter -->
+                    <div class="filter-section">
+                        <div class="filter-section-title dark:text-white">
+                            <span>برند</span>
+                            <svg class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="filter-options">
+                            {% for brand in brands %}
+                                <label class="filter-option dark:text-gray-300">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span>{{ brand.name }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Price Range Filter -->
+                    <div class="filter-section">
+                        <div class="filter-section-title dark:text-white">
+                            <span>محدوده قیمت</span>
+                        </div>
+                        <input type="range" min="0" max="1000000" value="500000" class="price-range">
+                        <div class="price-inputs">
+                            <input type="number" placeholder="حداقل"
+                                   class="price-input dark:bg-zinc-600 dark:text-white">
+                            <input type="number" placeholder="حداکثر"
+                                   class="price-input dark:bg-zinc-600 dark:text-white">
+                        </div>
+                    </div>
+
+                    <!-- Availability Toggle -->
+                    <div class="filter-section">
+                        <div class="flex items-center justify-between">
+                            <span class="dark:text-white">فقط کالاهای موجود</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Special Products Toggle -->
+                    <div class="filter-section">
+                        <div class="flex items-center justify-between">
+                            <span class="dark:text-white">فقط محصولات ویژه</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="lg:w-3/4">
+                <!-- Sort Options -->
+                <div class="bg-white dark:bg-zinc-700 rounded-lg shadow p-4 mb-6">
+                    <div class="flex flex-wrap items-center gap-4">
+                        <span class="flex items-center gap-2 dark:text-white">
+                            <svg class="w-5 h-5">
+                                <use href="#sort-list"></use>
+                            </svg>
+                            <span class="font-medium">مرتب‌سازی بر اساس:</span>
+                        </span>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="px-3 py-1 bg-green-500 text-white rounded-lg">محبوب‌ترین</button>
+                            <button class="px-3 py-1 bg-gray-200 dark:bg-zinc-600 rounded-lg">پرفروش‌ترین</button>
+                            <button class="px-3 py-1 bg-gray-200 dark:bg-zinc-600 rounded-lg">ارزان‌ترین</button>
+                            <button class="px-3 py-1 bg-gray-200 dark:bg-zinc-600 rounded-lg">گران‌ترین</button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- PRODUCT FOOTER -->
-                <div class="flex items-center justify-start px-2 lg:px-4 mb-3">
-                    <span class="rounded-full p-2 dark:bg-zinc-800 dark:hover:bg-green-500 bg-gray-100 hover:bg-green-600 hover:text-white transition-all duration-300">
-                        <svg class="w-4 h-4">
-                            <use href="#shopping-cart"></use>
-                        </svg>
-                    </span>
+                <!-- Products -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {% for item in prod %}
+                        <div class="group bg-white dark:bg-zinc-700 rounded-lg shadow overflow-hidden">
+                            <!-- PRODUCT IMAGE -->
+                            <a href="{% url 'products:detail_products' slug=item.slug %}">
+                                <img src="{{ item.image.url }}"
+                                     alt="{{ item.name }}"
+                                     class="group-hover:scale-105 duration-300 w-full h-48 object-contain p-4"/>
+                            </a>
+
+                            <!-- PRODUCT MAIN -->
+                            <div class="px-4 mb-3">
+                                <a href="{% url 'products:detail_products' slug=item.slug %}"
+                                   class="line-clamp-2 font-medium mb-2 text-sm lg:text-base block dark:text-white">
+                                    {{ item.name }}
+                                </a>
+                                <div class="flex items-center gap-x-1 lg:gap-x-3">
+                                    <p class="font-semibold text-green-600 dark:text-green-500">
+                                        {{ item.discount_price|floatformat:0|intcomma }}
+                                        <span class="font-normal text-sm">تومان</span>
+                                    </p>
+                                    {% if item.price > item.discount_price %}
+                                        <del class="text-xs text-rose-400">
+                                            {{ item.price|floatformat:0|intcomma }}
+                                        </del>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- PRODUCT FOOTER -->
+                            <div class="flex items-center justify-start px-4 mb-3">
+                                <button class="rounded-full p-2 dark:bg-zinc-800 dark:hover:bg-green-500 bg-gray-100 hover:bg-green-600 hover:text-white transition-all duration-300">
+                                    <svg class="w-4 h-4">
+                                        <use href="#shopping-cart"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
+
+                <!-- PAGINATION -->
+                {% if page_obj.has_other_pages %}
+                    <div class="pagination mt-8">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}">◀</a>
+                        {% else %}
+                            <span class="disabled">◀</span>
+                        {% endif %}
+
+                        {% for i in page_obj.paginator.page_range %}
+                            {% if i == page_obj.number %}
+                                <span class="active">{{ i }}</span>
+                            {% else %}
+                                <a href="?page={{ i }}">{{ i }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">▶</a>
+                        {% else %}
+                            <span class="disabled">▶</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
-        {% endfor %}
+        </div>
     </div>
 
-    <!-- PAGINATION -->
-    {% if page_obj.has_other_pages %}
-        <div class="pagination">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">◀</a>
-            {% else %}
-                <span class="disabled">◀</span>
-            {% endif %}
+    <script>
+        // Accordion functionality for filter sections
+        document.querySelectorAll('.filter-section-title').forEach(title => {
+            title.addEventListener('click', () => {
+                const section = title.parentElement;
+                const options = section.querySelector('.filter-options');
+                const icon = title.querySelector('svg');
 
-            {% for i in page_obj.paginator.page_range %}
-                {% if i == page_obj.number %}
-                    <span class="active">{{ i }}</span>
-                {% else %}
-                    <a href="?page={{ i }}">{{ i }}</a>
-                {% endif %}
-            {% endfor %}
+                if (options) {
+                    options.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                }
+            });
+        });
 
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">▶</a>
-            {% else %}
-                <span class="disabled">▶</span>
-            {% endif %}
-        </div>
-    {% endif %}
+        // Price range slider functionality
+        const priceRange = document.querySelector('.price-range');
+        const minPriceInput = document.querySelectorAll('.price-input')[0];
+        const maxPriceInput = document.querySelectorAll('.price-input')[1];
 
+        if (priceRange && minPriceInput && maxPriceInput) {
+            priceRange.addEventListener('input', () => {
+                maxPriceInput.value = priceRange.value;
+            });
 
+            minPriceInput.addEventListener('change', () => {
+                if (parseInt(minPriceInput.value) > parseInt(maxPriceInput.value)) {
+                    minPriceInput.value = maxPriceInput.value;
+                }
+            });
+
+            maxPriceInput.addEventListener('change', () => {
+                if (parseInt(maxPriceInput.value) < parseInt(minPriceInput.value)) {
+                    maxPriceInput.value = minPriceInput.value;
+                }
+                priceRange.value = maxPriceInput.value;
+            });
+        }
+    </script>
 {% endblock %}

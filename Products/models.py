@@ -75,6 +75,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now=False, null=False, blank=False)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = "نظر"
         verbose_name_plural = "نظر ها"
 
