@@ -126,23 +126,35 @@
 </head>
 <body class="back"
       style="background-image: url('{% static 'bg_coffe.png' %}'); background-size: cover; background-position: center;">
-
-<div class="form-box" dir="rtl">
-    <form class="form" method="post">
+<div class="form-box">
+    <form class="form" method="post" dir="rtl">
         {% csrf_token %}
-        <span class="title">ورود به حساب</span>
-        {% if error %}
-            <div class="error-message">{{ error }}</div>
+        <span class="title">ورود به حساب کاربری</span>
+        {% if form.errors %}
+            {% for error in form.non_field_errors %}
+                <div class="error-message">{{ error }}</div>
+            {% endfor %}
         {% endif %}
-        <div class="form-container">
-            <input type="text" class="input" placeholder="نام کاربری" name="username" required>
-            <input type="password" class="input" placeholder="رمز عبور" name="password" required>
+
+        <div class="form-container" dir="rtl">
+            {{ form.phone }}
+            {% for error in form.phone.errors %}
+                <div class="error-message">{{ error }}</div>
+            {% endfor %}
+
+            {{ form.password }}
+            {% for error in form.password.errors %}
+                <div class="error-message">{{ error }}</div>
+            {% endfor %}
         </div>
-        <button type="submit">ورود</button>
+
+        <button type="submit">ثبت نام</button>
     </form>
     <div class="form-section">
-        <p>حساب ندارید؟ <a href="{% url 'account:register' %}">ثبت نام کنید</a></p>
+        <p> حساب ندارید؟ <a href="{% url 'account:register' %}">ثبت نام کنید</a></p>
     </div>
 </div>
+
+
 </body>
 </html>
