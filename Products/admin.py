@@ -1,5 +1,4 @@
 from django.contrib import admin
-from matplotlib.pyplot import title
 
 from .models import Categories, Products, Comment
 
