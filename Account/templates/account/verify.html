@@ -1,0 +1,7 @@
+<form method="post">
+    {% csrf_token %}
+    {{ form.code.label_tag }}
+    {{ form.code }}
+    {{ form.code.errors }}
+    <button type="submit">تأیید کد</button>
+</form>
