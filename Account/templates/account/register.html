@@ -151,6 +151,29 @@
                 <div class="error-message">{{ error }}</div>
             {% endfor %}
 
+            <!-- First_Name -->
+            {{ form.first_name }}
+            {% for error in form.first_name.errors %}
+                <div class="error-message">{{ error }}</div>
+            {% endfor %}
+
+            <!-- Last_Name -->
+            {{ form.last_name }}
+            {% for error in form.last_name.errors %}
+                <div class="error-message">{{ error }}</div>
+            {% endfor %}
+
+            <!-- Real_Address -->
+            {{ form.real_address }}
+            {% for error in form.real_address.errors %}
+                <div class="error-message">{{ error }}</div>
+            {% endfor %}
+            <!-- Post_Code -->
+            {{ form.post_code }}
+            {% for error in form.post_code.errors %}
+                <div class="error-message">{{ error }}</div>
+            {% endfor %}
+
             <!-- Password -->
             {{ form.password1 }}
             {% for error in form.password1.errors %}
