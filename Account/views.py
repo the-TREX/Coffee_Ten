@@ -1,4 +1,16 @@
+from django.views import View
 from django.shortcuts import render, redirect
+<<<<<<< HEAD
+from django.contrib.auth import login
+from .forms import PhoneForm, OTPForm
+from .models import OTP, User
+from .utils import generate_otp, send_otp_sms
+
+
+class OTPLoginView(View):
+    template_name = 'account/login.html'
+
+=======
 from django.contrib.auth import login, authenticate, logout
 from .forms import RegisterFormCustom, UserEditForm, ContactForm, LoginForm
 from django.contrib import messages
@@ -34,41 +46,48 @@ class UserRegisterView(CreateView):
 
 
 class UserLoginView(View):  # OK
+>>>>>>> Try_To_MakeBetter_Account_App
     def get(self, request):
-        form = LoginForm()
-        return render(request, 'account/login.html', {'form': form})
+        form = PhoneForm()
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        form = LoginForm(request.POST)
+        form = PhoneForm(request.POST)
         if form.is_valid():
-            user = authenticate(username=form.cleaned_data['phone'], password=form.cleaned_data['password'])
-            if user is not None:
+            phone = form.cleaned_data['phone']
+            code = generate_otp()
+            OTP.objects.create(phone=phone, code=code)
+            send_otp_sms(phone, code)
+            request.session['phone'] = phone
+            return redirect('otp_auth:verify_otp')
+        return render(request, self.template_name, {'form': form})
+
+
+class OTPVerifyView(View):
+    template_name = 'account/verify.html'
+
+    def get(self, request):
+        if not request.session.get('phone'):
+            return redirect('account:login')
+        form = OTPForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        phone = request.session.get('phone')
+        form = OTPForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            otp = OTP.objects.filter(phone=phone, code=code).last()
+            if otp and otp.is_valid():
+                user, _ = User.objects.get_or_create(
+                    phone=phone,
+                    defaults={
+                        'username': phone,
+                        'email': f'{phone}@example.com'
+                    }
+                )
                 login(request, user)
                 return redirect('/')
             else:
-                form.add_error(None, 'نام کاربری یا رمز عبور اشتباه است')
-
-        return render(request, 'account/login.html', {'form': form})
-
-
-def user_logout(request):
-    logout(request)
-    return redirect("/")
-
-
-class UserEditeView(UpdateView):  # OK
-    model = User
-    fields = ['username', 'email']
-    template_name = 'account/edit.html'
-    success_url = "/"
-
-
-class ContactView(FormView):  # OK
-    template_name = 'account/contact.html'
-    form_class = ContactForm
-    success_url = '/'
-
-    def form_valid(self, form):
-        form_data = form.cleaned_data  # یه دیکشنری شامل داده‌های فرم هست بعد از اعتبارسنجی
-        Contact.objects.create(**form_data)
-        return super().form_valid(form)
+                form.add_error('code', 'کد وارد شده نادرست یا منقضی شده است')
+        return render(request, self.template_name, {'form': form})
