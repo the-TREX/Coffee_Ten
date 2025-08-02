@@ -154,12 +154,12 @@
                             </a>
                             <div class="flex items-center gap-x-1 lg:gap-x-3">
                                 <p class="font-DanaDemiBold text-green-600 dark:text-green-500">
-                                    {{ item.discount_price|floatformat:0 | intcomma }}
+                                    {{ item.discount_price|floatformat:0 | intcomma:False }}
                                     <span class="font-Dana text-sm">تومان</span>
                                 </p>
                                 {% if item.price > item.discount_price %}
                                     <del class="font-Dana text-xs lg:text-sm text-rose-300 hidden lg:inline">
-                                        {{ item.price|floatformat:0 | intcomma }}
+                                        {{ item.price|floatformat:0 | intcomma:False }}
                                         <span class="">تومان</span>
                                     </del>
                                 {% endif %}
@@ -233,12 +233,12 @@
                             </a>
                             <div class="flex items-center gap-x-1 lg:gap-x-3">
                                 <p class="font-DanaDemiBold text-green-600 dark:text-green-500">
-                                    {{ product.discount_price|floatformat:0 | intcomma }}
+                                    {{ product.discount_price|floatformat:0 | intcomma:False }}
                                     <span class="font-Dana text-sm">تومان</span>
                                 </p>
                                 {% if product.price > product.discount_price %}
                                     <del class="font-Dana text-xs lg:text-sm text-rose-300 hidden lg:inline">
-                                        {{ product.price|floatformat:0 | intcomma }}
+                                        {{ product.price|floatformat:0 | intcomma:False }}
                                         <span class="">تومان</span>
                                     </del>
                                 {% endif %}
