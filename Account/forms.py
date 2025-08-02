@@ -39,7 +39,7 @@ class RegisterFormCustom(UserCreationForm):
                                 label='')
     password2 = forms.CharField(required=True,
                                 widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'تکرار رمز عبور'}),
-                                label='', validators=[validators.MaxLengthValidator(11)])
+                                label='')
 
     class Meta:
         model = User  # dare mige toye kodam model save she
