@@ -8,5 +8,6 @@
   {% include "admin/color_theme_toggle.html" %}
 {% endif %}
 {% endblock %}
-{% block extrastyle %} <link rel="stylesheet" type="text/css" href="{% static 'styles/overwrite.css' %}"> {% endblock %}
+{% block extrastyle %} {{ block.super }} <link rel="stylesheet" href="{% static 'styles/admin_style.css' %}"/>{% endblock %}
+
 {% block nav-global %}{% endblock %}

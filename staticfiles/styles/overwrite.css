@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Dana';
+    src: url('../fonts/Dana/woff2/DanaFaNum-Medium.woff2');
+
+}
+
+*{
+    font-family: 'Dana';
+}
+body{
+    background-image: url('../bg_coffe.png');
+    backdrop-filter: blur(20px);
+}

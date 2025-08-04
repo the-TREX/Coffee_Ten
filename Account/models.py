@@ -2,6 +2,7 @@ import datetime
 from time import timezone
 
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from numpy.f2py.crackfortran import verbose
 
@@ -51,7 +52,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, verbose_name="ایمیل", unique=True)
     phone = models.CharField(verbose_name="تلفن همراه", max_length=11, unique=True)
     username = models.CharField(max_length=30, verbose_name="نام کاربری")
