@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Home',
     'Account',
     'Products',
+    'Cart'
 
 ]
 
