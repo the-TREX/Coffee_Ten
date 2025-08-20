@@ -76,13 +76,13 @@
             </div>
             {% with request.GET.sort as sort %}
                 <ul class="flex gap-4">
-                    <li><a href="?sort=is_bestseller" class="{% if sort == 'is_bestseller' %}text-green-500{% endif %}">محبوب
+                    <li><a href="?sort=is_bestseller" class="{% if sort == 'is_bestseller' %}text-green-500{% endif %}">پرفروش
                         ترین</a></li>
-                    <li><a href="?sort=created_at" class="{% if sort == 'created_at' %}text-green-500{% endif %}">پرفروش
-                        ترین</a></li>
+                    <li><a href="?sort=created_at" class="{% if sort == 'created_at' %}text-green-500{% endif %}">جدید ترین
+                        </a></li>
                     <li><a href="?sort=cheapest" class="{% if sort == 'cheapest' %}text-green-500{% endif %}">ارزان
                         ترین</a></li>
-                    <li><a href="?sort=-price" class="{% if sort == '-price' %}text-green-500{% endif %}">گران
+                    <li><a href="?sort=expensive" class="{% if sort == 'expensive' %}text-green-500{% endif %}">گران
                         ترین</a></li>
                 </ul>
             {% endwith %}
@@ -91,8 +91,10 @@
         <div class="flex flex-col lg:flex-row gap-4 ">
             <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {% for item in prod %}
+
                     <div class="group bg-white dark:bg-zinc-700 rounded-lg shadow overflow-hidden">
                         <!-- PRODUCT IMAGE -->
+
                         <a href="{% url 'products:detail_products' slug=item.slug %}">
                             <img src="{{ item.image.url }}"
                                  alt="{{ item.name }}"
@@ -107,12 +109,13 @@
                             </a>
                             <div class="flex items-center gap-x-1 lg:gap-x-3">
                                 <p class="font-DanaDemiBold text-green-600 dark:text-green-500">
-                                    {{ item.discount_price|floatformat:0|intcomma:False }}
+                                    {{ item.get_discount_price|floatformat:0 | intcomma:False }}
                                     <span class="font-Dana text-sm">تومان</span>
                                 </p>
-                                {% if item.price > item.discount_price %}
-                                    <del class="text-xs text-rose-400 font-Dana">
-                                        {{ item.price|floatformat:0|intcomma:False }}
+                                {% if item.discount_percent > 0 %}
+                                    <del class="font-Dana text-xs lg:text-sm text-rose-300 hidden lg:inline">
+                                        {{ item.price|floatformat:0 | intcomma:False }}
+                                        <span class="">تومان</span>
                                     </del>
                                 {% endif %}
                             </div>

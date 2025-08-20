@@ -5,6 +5,68 @@
     {{ detail_pro.name }}
 {% endblock %}
 {% block content %}
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+        <!-- Plus -->
+        <symbol id="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14"/>
+        </symbol>
+
+        <!-- Minus -->
+        <symbol id="minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14"/>
+        </symbol>
+
+        <!-- Trash -->
+        <symbol id="trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M9 6V4h6v2m-8 0h10l-1.5 14h-7L7 6z"/>
+        </symbol>
+
+        <!-- Close -->
+        <symbol id="close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 6l12 12M6 18L18 6"/>
+        </symbol>
+
+        <!-- Chevron Left -->
+        <symbol id="chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 19l-7-7 7-7"/>
+        </symbol>
+
+        <!-- Shopping Cart -->
+        <symbol id="shopping-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.72l1.38-9.72H6"/>
+        </symbol>
+
+        <!-- Shopping Bag -->
+        <symbol id="shopping-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2l1 7h10l1-7"/>
+            <path d="M4 9h16l-1 12H5L4 9z"/>
+        </symbol>
+
+        <!-- Check Badge -->
+        <symbol id="check-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 12l2 2 4-4"/>
+            <path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/>
+        </symbol>
+
+        <!-- Truck -->
+        <symbol id="truke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3h13v13H3z"/>
+            <path d="M16 8h5l1 4h-6z"/>
+            <circle cx="5.5" cy="16.5" r="1.5"/>
+            <circle cx="18.5" cy="16.5" r="1.5"/>
+        </symbol>
+
+        <!-- Box -->
+        <symbol id="box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 7l9-4 9 4-9 4z"/>
+            <path d="M3 17l9 4 9-4"/>
+            <path d="M3 7v10"/>
+            <path d="M21 7v10"/>
+            <path d="M12 11v10"/>
+        </symbol>
+    </svg>
     <style>
         body, html {
             margin: 0;
@@ -264,24 +326,31 @@
                         <p class="mt-2 font-DanaMedium">ویژگی های محصول :</p>
                         <div
                                 class="grid grid-cols-12 gap-4 child:col-span-12 xl:child:col-span-6 child:dark:bg-zinc-800 child:bg-gray-100 child:h-12 child:rounded-lg child:text-sm child:flex child:items-center child:justify-center">
-                            <div>
-                                <p class="text-zinc-600 dark:text-gray-400">گونه :{{ products.breed }}</p>
-                            </div>
-                            <div>
-                                <p class="text-zinc-600 dark:text-gray-400">
-                                    میزان کافئین : {{ products.caffeine_value }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="text-zinc-600 dark:text-gray-400">
-                                    خاستگاه : {{ products.birthplace }}
-                                </p>
-
-                            </div>
-                            <div>
-                                <p class="text-zinc-600 dark:text-gray-400">مواد تشکیل‌دهنده
-                                    : {{ products.make_with }}</p>
-                            </div>
+                            {% if products.breed %}
+                                <div>
+                                    <p class="text-zinc-600 dark:text-gray-400">گونه :{{ products.breed }}</p>
+                                </div>
+                            {% endif %}
+                            {% if products.caffeine_value %}
+                                <div>
+                                    <p class="text-zinc-600 dark:text-gray-400">
+                                        میزان کافئین : {{ products.caffeine_value }}
+                                    </p>
+                                </div>
+                            {% endif %}
+                            {% if products.birthplace %}
+                                <div>
+                                    <p class="text-zinc-600 dark:text-gray-400">
+                                        خاستگاه : {{ products.birthplace }}
+                                    </p>
+                                </div>
+                            {% endif %}
+                            {% if products.make_with %}
+                                <div>
+                                    <p class="text-zinc-600 dark:text-gray-400">مواد تشکیل‌دهنده
+                                        : {{ products.make_with }}</p>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -322,55 +391,67 @@
                     </p>
                 </div>
             </div>
-            <!-- PRICE & ADD TO CART BOX -->
-            <form method="post" class="w-full lg:w-1/4 lg:sticky top-5 flex flex-col gap-y-6">
+            <form method="post" action="{% url 'Cart:cart_add' products.id %}"
+                  class="w-full lg:w-1/4 flex flex-col gap-y-6">
                 {% csrf_token %}
-                <div class="top-5 flex flex-col gap-y-6" >
-                    <!-- PRICE -->
-                    <div class="flex items-center gap-x-1">
-                        <p class="text-2xl font-DanaDemiBold" id="unitPrice"
-                           data-price="{{ products.discount_price |floatformat | intcomma:False }}">
-                            {{ products.discount_price | floatformat | intcomma:False }}
-                        </p>
-                        <p>تومان</p>
-                    </div>
 
-                    <!-- تعداد -->
-                    <button
-                            class="w-full flex items-center justify-between gap-x-1 rounded-lg border border-gray-200 dark:border-white/20 py-2 px-3">
-                        <svg class="w-6 h-6 increment text-green-600">
-                            <use href="#plus"></use>
-                        </svg>
-                        <input type="number" name="quantity" id="quantity" min="1" max="20" value="1"
-                               class="custom-input mr-4 text-lg bg-transparent">
-                        <svg class="w-6 h-6 decrement text-red-500">
-                            <use href="#minus"></use>
-                        </svg>
-                    </button>
+                <!-- قیمت -->
+                <div class="flex items-center gap-x-1">
+                    <p class="text-2xl font-DanaDemiBold" id="unitPrice"
+                       data-price="{{ products.get_discount_price|default:products.price }}">
+                        {% if products.discount_percent == 0 %}
+                            {{ products.price|floatformat:0|intcomma:False }}
+                        {% else %}
+                            {{ products.get_discount_price|floatformat:0|intcomma:False }}
+                        {% endif %}
+                    </p>
+                    <p>تومان</p>
+                </div>
 
-                    <!-- مجموع خرید -->
-                    <button
-                            class="w-full flex items-center gap-x-1 justify-between dark:bg-zinc-800 dark:text-gray-400  bg-gray-100 transition-all rounded-lg py-2 px-2 xl:px-3 font-DanaMedium text-sm xl:text-base">
-                        <p>مجموع خرید :</p>
-                        <p id="totalPrice"> {{ products.discount_price|floatformat|intcomma:False }} تومان</p>
+                <!-- تعداد با دکمه های JS -->
+                <div class="flex items-center justify-between bg-gray-100 dark:bg-zinc-800 rounded-lg w-44 h-12">
+                    <button type="button" id="decrement"
+                            class="w-10 h-full flex items-center justify-center text-red-500 text-2xl font-bold">
+                        -
                     </button>
-                    <button
-                            type="submit"
+                    <input type="text" id="quantityInput" name="quantity" value="1" min="1" max="20"
+                           class="w-12 text-center bg-transparent focus:outline-none text-lg dark:text-white">
+                    <button type="button" id="increment"
+                            class="w-10 h-full flex items-center justify-center text-green-500 text-2xl font-bold">
+                        +
+                    </button>
+                </div>
+
+
+                <!-- مجموع خرید -->
+                <div class="w-full flex items-center gap-x-1 justify-between dark:bg-zinc-800 dark:text-gray-400  bg-gray-100 transition-all rounded-lg py-2 px-2 xl:px-3 font-DanaMedium text-sm xl:text-base">
+                    <p>مجموع خرید :</p>
+                    <p id="totalPrice">{{ products.get_discount_price|default:products.price|floatformat:0|intcomma:False }}
+                        تومان</p>
+                </div>
+
+                <!-- افزودن به سبد -->
+                {% if request.user.is_authenticated %}
+                    <button type="submit"
                             class="w-full flex items-center gap-x-1 justify-center bg-green-500 text-white hover:bg-green-600 transition-all rounded-lg shadow py-2">
-                        افزودن به سبد خرید
-                        <svg class="w-5 h-5" {% url 'Cart:cart_add' products.id %}>
+                        افزودن به سبد
+                        <svg class="w-5 h-5">
                             <use href="#shopping-bag"></use>
                         </svg>
                     </button>
-
-                    <div class="text-sm  text-gray-400 flex xl:items-center gap-x-1">
-                        <svg class="w-5 h-5">
-                            <use href="#info"></use>
-                        </svg>
-                        <p>ارسال رایگان برای خریدهای بالای 400 هزار تومان</p>
-                    </div>
-                </div>
+                {% else %}
+                    <a href="{% url 'account:login' %}?next={% url 'products:detail_products' products.slug %}">
+                        <button type="button"
+                                class="w-full flex items-center gap-x-1 justify-center bg-green-500 text-white hover:bg-green-600 transition-all rounded-lg shadow py-2">
+                            افزودن به سبد
+                            <svg class="w-5 h-5">
+                                <use href="#shopping-bag"></use>
+                            </svg>
+                        </button>
+                    </a>
+                {% endif %}
             </form>
+
 
         </section>
         <!-- COMMENTS -->
@@ -462,42 +543,48 @@
     </main>
 {% endblock %}
 {% block script %}
-{#    <script>#}
-{#        document.addEventListener("DOMContentLoaded", function () {#}
-{#            const input = document.getElementById("customInput");#}
-{#            const totalPrice = document.getElementById("totalPrice");#}
-{#            const unitPrice = parseInt(document.getElementById("unitPrice").dataset.price);#}
-{##}
-{#            function formatNumber(num) {#}
-{#                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");#}
-{#            }#}
-{##}
-{#            function updateTotal() {#}
-{#                const count = parseInt(input.value) || 1;#}
-{#                const total = count * unitPrice;#}
-{#                totalPrice.innerText = formatNumber(total) + " تومان";#}
-{#            }#}
-{##}
-            {#input.addEventListener("change", updateTotal);#}
-            {#input.addEventListener("input", updateTotal);#}
-{##}
-{#            document.querySelector(".increment").addEventListener("click", function () {#}
-{#                if (input.value < 20) {#}
-{#                    input.value = parseInt(input.value) + 1;#}
-{#                    updateTotal();#}
-{#                }#}
-{#            });#}
-{##}
-{#            document.querySelector(".decrement").addEventListener("click", function () {#}
-{#                if (input.value > 1) {#}
-{#                    input.value = parseInt(input.value) - 1;#}
-{#                    updateTotal();#}
-{#                }#}
-{#            });#}
-{##}
-{#            updateTotal(); // محاسبه اولیه#}
-{#        });#}
-{#    </script>#}
+    <script>
+        document.querySelectorAll('.btn-plus').forEach(btn => {
+            btn.addEventListener('click', function () {
+                let input = this.parentElement.querySelector('.quantity-input');
+                let value = parseInt(input.value || 1);
+                input.value = value + 1;
+                this.closest("form").submit();
+            });
+        });
+
+        document.querySelectorAll('.btn-minus').forEach(btn => {
+            btn.addEventListener('click', function () {
+                let input = this.parentElement.querySelector('.quantity-input');
+                let value = parseInt(input.value || 1);
+                if (value > 1) {
+                    input.value = value - 1;
+                    this.closest("form").submit();
+                }
+            });
+        });
+        const decrementBtn = document.getElementById('decrement');
+        const incrementBtn = document.getElementById('increment');
+        const quantityInput = document.getElementById('quantityInput');
+        const unitPrice = parseInt(document.getElementById('unitPrice').dataset.price);
+        const totalPrice = document.getElementById('totalPrice');
+
+        decrementBtn.addEventListener('click', () => {
+            let qty = parseInt(quantityInput.value);
+            if (qty > 1) qty--;
+            quantityInput.value = qty;
+            totalPrice.textContent = (qty * unitPrice).toLocaleString() + " تومان";
+        });
+
+        incrementBtn.addEventListener('click', () => {
+            let qty = parseInt(quantityInput.value);
+            if (qty < 20) qty++;
+            quantityInput.value = qty;
+            totalPrice.textContent = (qty * unitPrice).toLocaleString() + " تومان";
+        });
+    </script>
+
+
 
 {% endblock %}
 
