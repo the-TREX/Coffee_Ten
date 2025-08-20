@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+from django.templatetags.static import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +41,9 @@ INSTALLED_APPS = [
     'django_social_share',
     'Home',
     'Account',
-    'Products'
+    'Products',
+    'Cart'
+
 ]
 
 MIDDLEWARE = [
@@ -65,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Cart.context_processors.cart'
             ],
         },
     },
@@ -118,6 +123,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 
@@ -128,4 +134,27 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "Account.User"
+AUTH_USER_MODEL = 'Account.User'
+
+AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend",
+                           "Account.authentication.EmailauthBackend"]
+
+ADMIN_SITE = "unfold.sites.UnfoldAdminSite"
+
+UNFOLD = {
+    "SITE_TITLE": "پنل مدیریت کافی تن",
+    "SITE_HEADER": "مدیریت",
+    "SHOW_COUNTS": True,
+    "SHOW_RECENT": True,
+    "CUSTOM_CSS": ["styles/css/admin_style.css"],
+    "SITE_ICON": {"light": lambda request: static("Images/FLOG.png"),
+                  "dark": lambda request: static("Images/FLOG.png"), },
+    "SITE_FAVICONS": [
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/svg+xml",
+            "href": lambda request: static("Images/FLOG.png"),
+        },
+    ],
+}

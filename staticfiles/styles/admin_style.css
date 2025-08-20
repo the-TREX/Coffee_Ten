@@ -1,0 +1,109 @@
+html, body {
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: "2  Koodak";
+
+}
+
+
+/* Sidebar */
+.main-sidebar {
+    right: 0 !important;
+    left: auto !important;
+
+}
+
+/* Content shift */
+.content-wrapper,
+.main-footer,
+.main-header {
+    margin-right: 250px !important;
+    margin-left: 0 !important;
+    padding: 1.5rem;
+    background-color: #e8e8e8;
+}
+
+/* Collapse sidebar */
+.sidebar-collapse .main-sidebar {
+    margin-right: -250px !important;
+    margin-left: 0 !important;
+}
+
+/* Nav alignment */
+.nav {
+    padding-right: 0 !important;
+}
+
+.nav-sidebar .nav-link {
+    text-align: right !important;
+}
+
+.nav-sidebar .nav-link i {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+/* Brand */
+.brand-link {
+    text-align: right !important;
+}
+
+/* User menu */
+.user-panel,
+.navbar-nav {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* Forms */
+.form-control {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+label {
+    display: block;
+    text-align: right !important;
+    font-weight: bold;
+}
+
+/* Margins & paddings */
+.ml-auto, .mx-auto {
+    margin-right: auto !important;
+    margin-left: 0 !important;
+}
+
+.pl-3, .px-3 {
+    padding-right: 1rem !important;
+    padding-left: 0 !important;
+
+}
+
+
+.tab-content input, textarea {
+    background-color: #343a40 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    margin: auto !important;
+}
+
+brand-link navbar-success:hover {
+    background-color: #00bc8c !important;
+}
+
+#id_tags {
+    display: block;
+    width: 100%;
+    padding: 10px;
+}
+
+#changelist-search .form-group {
+    margin: 10px !important;
+}
+
+.alert-success a {
+    color: #ffffff !important;
+}

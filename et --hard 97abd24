@@ -1,0 +1,65 @@
+*   [33mfe23a40[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m main
+[31m|[m[32m\[m  
+[31m|[m * [33mdf38377[m[33m ([m[1;32mTry_To_MakeBetter_Account_App[m[33m)[m Try_To_MakeBetter_Account_App
+[31m|[m * [33mcdad866[m Try_To_MakeBetter_Account_App
+[31m|[m * [33m835a609[m Try_To_MakeBetter_Account_App
+* [32m|[m   [33m97abd24[m main
+[32m|[m[34m\[m [32m\[m  
+[32m|[m [34m|[m[32m/[m  
+[32m|[m[32m/[m[34m|[m   
+[32m|[m * [33m20056d5[m Updateusermodel_2
+* [34m|[m [33m97cd8d6[m main
+* [34m|[m [33m6a856fb[m main
+* [34m|[m [33mcd537aa[m main
+* [34m|[m [33m5a6417a[m main
+* [34m|[m [33meee8d5e[m Remove .pyc and __pycache__ files
+[35m|[m[34m\[m[34m|[m 
+[35m|[m * [33m3d6ec75[m Updateusermodel
+[35m|[m * [33mdb21d7d[m Updateusermodel
+[35m|[m * [33m2126b5e[m Updateusermold
+[35m|[m * [33mdd717b8[m Updateusermodel
+* [36m|[m [33m34c41a8[m main
+[36m|[m[36m/[m  
+* [33mff7ef31[m main
+* [33ma4bbc11[m Remove .pyc and __pycache__ files
+* [33mf528369[m main
+* [33ma1df835[m comment
+* [33m2ea80b4[m comment
+*   [33m36e2766[m main
+[1;31m|[m[1;32m\[m  
+[1;31m|[m * [33m1ee92a0[m 1.0.2
+* [1;32m|[m [33m1c56456[m main
+* [1;32m|[m [33m3c51d17[m main
+* [1;32m|[m   [33m2a29430[m main
+[1;33m|[m[1;34m\[m [1;32m\[m  
+[1;33m|[m * [1;32m|[m [33maa1d2d1[m add_comment_for_products
+[1;33m|[m * [1;32m|[m [33m3e25dc2[m add_comment_for_products
+[1;33m|[m * [1;32m|[m [33m5f523b0[m add_comment_for_products
+[1;33m|[m * [1;32m|[m [33m7c4ef58[m add_comment_for_products
+[1;33m|[m * [1;32m|[m [33m7099bdc[m add_comment_for_products
+* [1;34m|[m [1;32m|[m [33mca3c636[m main
+* [1;34m|[m [1;32m|[m   [33m07611a8[m main
+[1;35m|[m[1;32m\[m [1;34m\[m [1;32m\[m  
+[1;35m|[m [1;32m|[m [1;34m|[m[1;32m/[m  
+[1;35m|[m [1;32m|[m[1;32m/[m[1;34m|[m   
+[1;35m|[m * [1;34m|[m [33meea2b05[m 1.0.2
+[1;35m|[m * [1;34m|[m [33m35e3528[m 1.0.2
+[1;35m|[m * [1;34m|[m [33m3179577[m 1.0.2
+[1;35m|[m * [1;34m|[m [33m7758c95[m Remove pycache files from git
+* [1;36m|[m [1;34m|[m [33mbb10b58[m main
+[1;34m|[m [1;36m|[m[1;34m/[m  
+[1;34m|[m[1;34m/[m[1;36m|[m   
+* [1;36m|[m [33mf35c30e[m 1.0.2
+* [1;36m|[m   [33m78d95a6[m Merge remote-tracking branch 'origin/main'
+[31m|[m[32m\[m [1;36m\[m  
+[31m|[m * [1;36m|[m [33m2a1ef13[m Remove .pyc and __pycache__ files
+* [32m|[m [1;36m|[m [33md128336[m Remove .pyc and __pycache__ files
+* [32m|[m [1;36m|[m [33mc172ad6[m Remove .pyc and __pycache__ files
+[32m|[m[32m/[m [1;36m/[m  
+* [1;36m/[m [33m9facf4b[m 1.0.2
+[1;36m|[m[1;36m/[m  
+* [33m358ea1a[m 1.0.1
+* [33mafe73c7[m 1.0.1
+* [33m4e95e93[m 1.0.1
+* [33m4be4fc5[m 1.0.1
+* [33md8594f5[m 1.0.0

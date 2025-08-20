@@ -1,0 +1,63 @@
+/* === Font === */
+@font-face {
+    font-family: Vazir;
+    src: url('/static/fonts/Vazir.woff2') format('woff2');
+}
+
+body, html {
+    font-family: Vazir, Tahoma, sans-serif !important;
+}
+
+/* === Global RTL === */
+html, body {
+    direction: rtl !important;
+    text-align: right !important;
+    unicode-bidi: plaintext;
+    overflow-x: hidden;
+}
+
+/* === Header (Top nav) direction === */
+header nav,
+header .flex {
+    flex-direction: row-reverse !important;
+}
+
+/* === Sidebar Styling === */
+aside[class*="sidebar"] {
+    direction: rtl !important;
+    text-align: right !important;
+    padding-right: 1rem;
+}
+
+aside[class*="sidebar"] ul li a {
+    justify-content: flex-end !important;
+}
+
+/* === Main content fix (NO margin-right!) */
+main[class*="main-content"] {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* === Table fix === */
+table th,
+table td {
+    text-align: right !important;
+    direction: rtl;
+}
+
+/* === Filter and Search alignment === */
+.change-list .actions {
+    flex-direction: row-reverse !important;
+    justify-content: space-between !important;
+}
+
+input[type="search"] {
+    direction: rtl;
+    text-align: right;
+}
+
+/* === Optional: Smaller sidebar width */
+aside[class*="sidebar"] {
+    width: 14rem !important;
+}

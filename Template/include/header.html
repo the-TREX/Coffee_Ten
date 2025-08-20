@@ -177,6 +177,13 @@
                         <use href="#sun"/>
                     </svg>
                 </button>
+                <button class="open-shopping-cart__btn relative">
+                    <a href="{% url 'Cart:cart_detail' %}">
+                        <svg class="w-6 h-6">
+                            <use href="#shopping-cart"/>
+                        </svg>
+                    </a>
+                </button>
                 <!-- بخش حساب کاربری -->
                 {% if request.user.is_authenticated %}
                     <button class="group relative px-2 lg:px-3 py-2 flex items-center justify-end gap-x-1 text-white transition-colors bg-green-500 hover:bg-green-600 rounded-lg">

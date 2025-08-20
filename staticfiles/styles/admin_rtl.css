@@ -1,0 +1,11 @@
+/* اعمال راست‌چین برای کل پنل */
+body, html {
+    direction: rtl !important;
+    text-align: right !important;
+
+}
+
+/* اگه کلمات انگلیسی تراز نیستن */
+* {
+    unicode-bidi: plaintext !important;
+}

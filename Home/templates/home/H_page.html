@@ -154,10 +154,10 @@
                             </a>
                             <div class="flex items-center gap-x-1 lg:gap-x-3">
                                 <p class="font-DanaDemiBold text-green-600 dark:text-green-500">
-                                    {{ item.discount_price|floatformat:0 | intcomma:False }}
+                                    {{ item.get_discount_price|floatformat:0 | intcomma:False }}
                                     <span class="font-Dana text-sm">تومان</span>
                                 </p>
-                                {% if item.price > item.discount_price %}
+                                {% if item.discount_percent > 0 %}
                                     <del class="font-Dana text-xs lg:text-sm text-rose-300 hidden lg:inline">
                                         {{ item.price|floatformat:0 | intcomma:False }}
                                         <span class="">تومان</span>
@@ -192,19 +192,6 @@
                     محصولات پر فروش
                 </h2>
             </div>
-            <div
-                    class="flex items-center gap-x-2 child:p-2 child:bg-white child:dark:bg-zinc-700 child:shadow child:rounded-full">
-                <button class="prev-slide-best ">
-                    <svg class="w-4 h-4">
-                        <use href="#chevron-right"></use>
-                    </svg>
-                </button>
-                <button class="next-slide-best ">
-                    <svg class="w-4 h-4">
-                        <use href="#chevron-left"></use>
-                    </svg>
-                </button>
-            </div>
         </div>
 
         <!-- SLIDER  -->
@@ -233,10 +220,10 @@
                             </a>
                             <div class="flex items-center gap-x-1 lg:gap-x-3">
                                 <p class="font-DanaDemiBold text-green-600 dark:text-green-500">
-                                    {{ product.discount_price|floatformat:0 | intcomma:False }}
+                                    {{ product.get_discount_price|floatformat:0 | intcomma:False }}
                                     <span class="font-Dana text-sm">تومان</span>
                                 </p>
-                                {% if product.price > product.discount_price %}
+                                {% if product.discount_percent > 0 %}
                                     <del class="font-Dana text-xs lg:text-sm text-rose-300 hidden lg:inline">
                                         {{ product.price|floatformat:0 | intcomma:False }}
                                         <span class="">تومان</span>

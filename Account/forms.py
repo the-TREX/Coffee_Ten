@@ -1,25 +1,50 @@
+<<<<<<< HEAD
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from .models import Contact
+=======
+<<<<<<< HEAD
+>>>>>>> c733fe4115b9e3fff773082e92d5ab50f83a3dab
 from django import forms
 from django.core import validators
 
 
+<<<<<<< HEAD
+=======
+class OTPForm(forms.Form):
+    code = forms.CharField(max_length=6)
+=======
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.core.exceptions import ValidationError
+from .models import Contact
+from django import forms
+from django.core import validators
+>>>>>>> c733fe4115b9e3fff773082e92d5ab50f83a3dab
 from Account.models import User
 
 
 class LoginForm(forms.Form):
     phone = forms.CharField(required=True,
+<<<<<<< HEAD
                             widget=forms.NumberInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه'}), label='',
                             help_text='09...', validators=[validators.MaxLengthValidator(11)])
+=======
+                            widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه یا ایمیل '}), label='',
+                            help_text='09...',)
+>>>>>>> c733fe4115b9e3fff773082e92d5ab50f83a3dab
     password = forms.CharField(required=True,
                                widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
                                label='')
 
 
+<<<<<<< HEAD
 class RegisterForm(UserCreationForm):
+=======
+class RegisterFormCustom(UserCreationForm):
+>>>>>>> c733fe4115b9e3fff773082e92d5ab50f83a3dab
     username = forms.CharField(required=True,
                                widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام کاربری'}), label='')
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'input', 'placeholder': 'ایمیل'}),
@@ -27,16 +52,40 @@ class RegisterForm(UserCreationForm):
     phone = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه'}), label='',
                             help_text='09...', validators=[validators.MaxLengthValidator(11)])
+<<<<<<< HEAD
+=======
+    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام'}),
+                                 label='')
+    last_name = forms.CharField(required=True,
+                                widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام خانوادگی'}),
+                                label='')
+    real_address = forms.CharField(required=True,
+                                   widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'آدرس'}), label='')
+    post_code = forms.CharField(required=True,
+                                widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'کد پستی'}), label='')
+
+>>>>>>> c733fe4115b9e3fff773082e92d5ab50f83a3dab
     password1 = forms.CharField(required=True,
                                 widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
                                 label='')
     password2 = forms.CharField(required=True,
                                 widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'تکرار رمز عبور'}),
+<<<<<<< HEAD
                                 label='', validators=[validators.MaxLengthValidator(11)])
 
     class Meta:
         model = User  # dare mige toye kodam model save she
         fields = ['username', 'email', 'phone', 'password1', 'password2']  # dare mige in filde ha ro dare
+=======
+                                label='')
+
+    class Meta:
+        model = User  # dare mige toye kodam model save she
+        fields = ['username', 'email', 'phone', 'first_name', 'last_name', 'real_address', 'post_code', 'password1',
+                  'password2']
+
+    # dare mige in filde ha ro dare
+>>>>>>> c733fe4115b9e3fff773082e92d5ab50f83a3dab
 
     def clean_username(self):  # baz nevisi filde username
         username = self.cleaned_data['username']  # meghdare filde ro migirim
@@ -64,7 +113,11 @@ class ContactForm(forms.ModelForm):
         }
 
 
+<<<<<<< HEAD
 class UserCreationForm(forms.ModelForm):
+=======
+class CustomUserCreationForm(forms.ModelForm):
+>>>>>>> c733fe4115b9e3fff773082e92d5ab50f83a3dab
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
 
@@ -105,3 +158,7 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["email", "password", "phone", "is_active", "is_admin"]
+<<<<<<< HEAD
+=======
+>>>>>>> Try_To_MakeBetter_Account_App
+>>>>>>> c733fe4115b9e3fff773082e92d5ab50f83a3dab

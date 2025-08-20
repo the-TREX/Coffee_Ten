@@ -1,4 +1,6 @@
-from django.contrib.auth.models import User
+import uuid
+
+from Account.models import User
 from django.db import models
 from django.utils.html import format_html
 from django.utils.text import slugify
@@ -26,20 +28,25 @@ class Products(models.Model):
     image = models.ImageField(upload_to='images/bestsellers/', verbose_name="تصویر محصول")
     slug = models.SlugField(max_length=100, unique=True, null=True, blank=True, verbose_name="اسلاگ")
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="قیمت اصلی")
-    discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True,
-                                         verbose_name="قیمت تخفیف")
     discount_percent = models.PositiveSmallIntegerField(default=0, null=True, blank=True, verbose_name="درصد تخفیف")
     rating = models.PositiveSmallIntegerField(default=0, verbose_name="امتیاز کاربر")
     created_at = models.DateTimeField(auto_now=False, null=False, blank=False,
                                       verbose_name="تاریخ ثبت محصول")  # we are use it for new products
     is_bestseller = models.BooleanField(default=False, verbose_name="پرفروش")
-    is_offer = models.BooleanField(default=False, verbose_name="دارای تخفیف")  # barasi offer bodan prosuct
-    offer_expiration = models.DateTimeField(null=True, blank=True, verbose_name="تاریخ اتمام تخفیف")  # end time of
     breed = models.CharField(max_length=50, null=True, blank=True, verbose_name="نوع قهوه")
     caffeine_value = models.CharField(max_length=50, null=True, blank=True, verbose_name="میزان کافئن")
     birthplace = models.CharField(max_length=50, null=True, blank=True, verbose_name="خاستگاه")
     make_with = models.CharField(max_length=50, null=True, blank=True, verbose_name="مواد تشکیل‌دهنده")
     description = models.TextField(null=True, blank=True, verbose_name="توضیحات محصول")
+
+    def get_discount_price(self):
+        if self.discount_percent > 0:
+            discount_amount = (self.price * self.discount_percent) / 100
+            return self.price - discount_amount
+        return self.price
+
+    def get_discount_amount(self):
+        return self.price - self.get_discount_price()
 
     def show_image(self):
         if self.image:

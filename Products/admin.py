@@ -1,5 +1,4 @@
 from django.contrib import admin
-from matplotlib.pyplot import title
 
 from .models import Categories, Products, Comment
 
@@ -34,4 +33,9 @@ class ProductsAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-admin.site.register(Comment)
+# admin.site.register(Comment)
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['user','product','created_at']
+    search_fields = ('product__name',)
+    list_filter = ['product__breed', 'created_at']
