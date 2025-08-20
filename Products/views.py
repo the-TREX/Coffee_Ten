@@ -13,21 +13,19 @@ class ProductListView(ListView):
     context_object_name = "prod"
     paginate_by = 8
 
+    # --- Filter Products ---
     def get_queryset(self):
-        queryset = super().get_queryset()
-        sort = self.request.GET.get('sort')
+        queryset = super().get_queryset()  # == Products.objects.all()
+        sort = self.request.GET.get('sort', 'is_bestseller')
 
         if sort == 'popular':
-
             queryset = queryset.order_by('-rating')
-        elif sort == 'best_selling':
-
+        elif sort == 'is_bestseller':
             queryset = queryset.order_by('-is_bestseller')
         elif sort == 'cheapest':
-
-            queryset = queryset.order_by('discount_price', 'price')
+            queryset = queryset.order_by('price')
         elif sort == 'expensive':
-            queryset = queryset.order_by('-discount_price', '-price')
+            queryset = queryset.order_by('-price')
 
         return queryset
 
@@ -46,7 +44,6 @@ class ProductDetailView(View):
     def post(self, request, slug):
         product = get_object_or_404(Products, slug=slug)
         form = CommentForm(request.POST)
-
         if form.is_valid():
             comment = form.save(commit=False)
             comment.product = product
@@ -75,7 +72,21 @@ class CategoryProductsView(ListView):
     def get_queryset(self):
         slug = self.kwargs.get('slug')
         self.category = get_object_or_404(Categories, slug=slug)
-        return Products.objects.filter(category=self.category)
+
+        queryset = Products.objects.filter(category=self.category)
+
+        sort = self.request.GET.get('sort', 'is_bestseller')
+
+        if sort == 'created_at':
+            queryset = queryset.order_by('-created_at')
+        elif sort == 'is_bestseller':
+            queryset = queryset.order_by('-is_bestseller')
+        elif sort == 'cheapest':
+            queryset = queryset.order_by('price')
+        elif sort == 'expensive':
+            queryset = queryset.order_by('-price')
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

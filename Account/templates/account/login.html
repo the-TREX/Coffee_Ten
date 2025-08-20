@@ -130,6 +130,8 @@
     <form class="form" method="post" dir="rtl">
         {% csrf_token %}
         <span class="title">ورود به حساب کاربری</span>
+        <input type="hidden" name="next" value="{{ next }}">
+
         {% if form.errors %}
             {% for error in form.non_field_errors %}
                 <div class="error-message">{{ error }}</div>

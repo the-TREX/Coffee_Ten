@@ -56,10 +56,30 @@
         }
     </style>
 
+    <div
+            class="dark:bg-zinc-700 bg-white flex flex-wrap items-center justify-start lg:gap-x-8 py-2 px-2 sm:px-4 shadow rounded-lg sm:h-16">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5">
+                <use href="#sort-list"></use>
+            </svg>
+            <h2 class="font-DanaDemiBold">مرتب سازی بر اساس :</h2>
+        </div>
+        {% with request.GET.sort as sort %}
+            <ul class="flex gap-4">
+                <li><a href="?sort=is_bestseller" class="{% if sort == 'is_bestseller' %}text-green-500{% endif %}">پرفروش
+                    ترین</a></li>
+                <li><a href="?sort=created_at" class="{% if sort == 'created_at' %}text-green-500{% endif %}">جدید ترین
+                </a></li>
+                <li><a href="?sort=cheapest" class="{% if sort == 'cheapest' %}text-green-500{% endif %}">ارزان
+                    ترین</a></li>
+                <li><a href="?sort=expensive" class="{% if sort == 'expensive' %}text-green-500{% endif %}">گران
+                    ترین</a></li>
+            </ul>
+        {% endwith %}
+
+    </div>
     <!-- محصولات مربوط به دسته‌بندی فعلی -->
-    <h2 class="text-lg font-DanaBold mb-4 border-b pb-2 mt-10">
-        محصولات دسته‌بندی: {{ category.name }}
-    </h2>
+
     <main class="container child:mt-8">
         <div class="flex flex-col lg:flex-row gap-4 ">
             <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -76,12 +96,12 @@
                             </a>
                             <div class="flex items-center gap-x-1 lg:gap-x-3">
                                 <p class="font-DanaDemiBold text-green-600 dark:text-green-500">
-                                    {{ item.discount_price|floatformat:0|intcomma:False }}
+                                    {{ item.get_discount_price|floatformat:0|intcomma:False }}
                                     <span class="font-Dana text-sm">تومان</span>
                                 </p>
-                                {% if item.price > item.discount_price %}
+                                {% if  item.discount_percent > 0 %}
                                     <del class="text-xs text-rose-400 font-Dana">
-                                        {{ item.price|floatformat:0|intcomma:False }}
+                                        {{ item.price|floatformat:0|intcomma:False }} تومن
                                     </del>
                                 {% endif %}
                             </div>
