@@ -1,10 +1,6 @@
-import datetime
-from time import timezone
-
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
-from numpy.f2py.crackfortran import verbose
 
 
 class Contact(models.Model):
@@ -52,17 +48,21 @@ class UserManager(BaseUserManager):
         return user
 
 
+<<<<<<< HEAD
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, verbose_name="ایمیل", unique=True)
+=======
+class User(AbstractBaseUser):
+    email = models.EmailField(verbose_name="email address", max_length=255)
+>>>>>>> d5b69549689337c2da335bf34d0b440626b39ab0
     phone = models.CharField(verbose_name="تلفن همراه", max_length=11, unique=True)
     username = models.CharField(max_length=30, verbose_name="نام کاربری")
     first_name = models.CharField(max_length=80, verbose_name="نام", default="کاربر")
     last_name = models.CharField(max_length=80, verbose_name="نام خانوادگی", default="سیستم")
     real_address = models.CharField(max_length=400, verbose_name="آدرس", default="نامشخص")
     post_code = models.CharField(max_length=10, verbose_name="کد پستی", default="0000000000")
-    joined_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="تاریخ عضویت")
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False, verbose_name="کاربر ادمین است")
+    is_admin = models.BooleanField(default=False)
 
     objects = UserManager()
 

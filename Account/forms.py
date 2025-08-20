@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+from django import forms
+
+class PhoneForm(forms.Form):
+    phone = forms.CharField(max_length=15)
+
+class OTPForm(forms.Form):
+    code = forms.CharField(max_length=6)
+=======
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
@@ -115,3 +124,4 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["email", "password", "phone", "is_active", "is_admin"]
+>>>>>>> Try_To_MakeBetter_Account_App
