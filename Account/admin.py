@@ -15,7 +15,7 @@ class UserAdmin(BaseUserAdmin):
     # that reference specific fields on auth.User.
 
     list_display = ["username", "email", "phone", "is_admin", "real_address"]
-    list_filter = ["is_admin" , "joined_at"]
+    list_filter = ["is_admin"]
     fieldsets = [
         ("اطلاعات شخصی",
          {"fields": ["first_name", "last_name", "phone", "real_address","post_code", "email", "username", "password"]}),
