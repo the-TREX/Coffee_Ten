@@ -32,6 +32,7 @@ class UserManager(BaseUserManager):
             post_code=post_code,
 
         )
+
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -48,13 +49,8 @@ class UserManager(BaseUserManager):
         return user
 
 
-<<<<<<< HEAD
-class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=255, verbose_name="ایمیل", unique=True)
-=======
 class User(AbstractBaseUser):
     email = models.EmailField(verbose_name="email address", max_length=255)
->>>>>>> d5b69549689337c2da335bf34d0b440626b39ab0
     phone = models.CharField(verbose_name="تلفن همراه", max_length=11, unique=True)
     username = models.CharField(max_length=30, verbose_name="نام کاربری")
     first_name = models.CharField(max_length=80, verbose_name="نام", default="کاربر")

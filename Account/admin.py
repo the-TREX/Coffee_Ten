@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from Account.models import User
+from Account.models import User, Contact
 
 
 class UserAdmin(BaseUserAdmin):
@@ -15,7 +15,7 @@ class UserAdmin(BaseUserAdmin):
     # that reference specific fields on auth.User.
 
     list_display = ["username", "email", "phone", "is_admin", "real_address"]
-    list_filter = ["is_admin" , "joined_at"]
+    list_filter = ["is_admin"]
     fieldsets = [
         ("اطلاعات شخصی",
          {"fields": ["first_name", "last_name", "phone", "real_address","post_code", "email", "username", "password"]}),
@@ -41,4 +41,4 @@ admin.site.register(User, UserAdmin)
 
 admin.site.unregister(Group)
 
-# admin.site.register(Contact)
+admin.site.register(Contact)
