@@ -129,9 +129,8 @@
 <div class="form-box">
     <form class="form" method="post" dir="rtl">
         {% csrf_token %}
-        <span class="title">ورود به حساب کاربری</span>
         <input type="hidden" name="next" value="{{ next }}">
-
+        <span class="title">ورود به حساب کاربری</span>
         {% if form.errors %}
             {% for error in form.non_field_errors %}
                 <div class="error-message">{{ error }}</div>
@@ -150,7 +149,7 @@
             {% endfor %}
         </div>
 
-        <button type="submit">ورود</button>
+        <button type="submit">ثبت نام</button>
     </form>
     <div class="form-section">
         <p> حساب ندارید؟ <a href="{% url 'account:register' %}">ثبت نام کنید</a></p>

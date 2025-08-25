@@ -1,62 +1,57 @@
-from django import forms
-from django.contrib.auth.forms import UserCreationForm, ReadOnlyPasswordHashField
-from django.core import validators
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
-
-from .models import Contact, User
+from .models import Contact
+from django import forms
+from django.core import validators
+from Account.models import User
 
 
 class LoginForm(forms.Form):
-    phone = forms.CharField(
-        required=True,
-        widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه'}),
-        label='',
-        help_text='09...',
-        validators=[validators.MaxLengthValidator(11)]
-    )
-    password = forms.CharField(
-        required=True,
-        widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
-        label=''
-    )
+    phone = forms.CharField(required=True,
+                            widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه یا ایمیل '}), label='',
+                            help_text='09...',)
+    password = forms.CharField(required=True,
+                               widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
+                               label='')
 
 
-class RegisterForm(UserCreationForm):
-    username = forms.CharField(
-        required=True,
-        widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام کاربری'}),
-        label=''
-    )
-    email = forms.EmailField(
-        required=True,
-        widget=forms.EmailInput(attrs={'class': 'input', 'placeholder': 'ایمیل'}),
-        label=''
-    )
-    phone = forms.CharField(
-        required=True,
-        widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه'}),
-        label='',
-        help_text='09...',
-        validators=[validators.MaxLengthValidator(11)]
-    )
-    password1 = forms.CharField(
-        required=True,
-        widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
-        label=''
-    )
-    password2 = forms.CharField(
-        required=True,
-        widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'تکرار رمز عبور'}),
-        label=''
-    )
+class RegisterFormCustom(UserCreationForm):
+    username = forms.CharField(required=True,
+                               widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام کاربری'}), label='')
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'input', 'placeholder': 'ایمیل'}),
+                             label='')
+    phone = forms.CharField(required=True,
+                            widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه'}), label='',
+                            help_text='09...', validators=[validators.MaxLengthValidator(11)])
+    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام'}),
+                                 label='')
+    last_name = forms.CharField(required=True,
+                                widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام خانوادگی'}),
+                                label='')
+    real_address = forms.CharField(required=True,
+                                   widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'آدرس'}), label='')
+    post_code = forms.CharField(required=True,
+                                widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'کد پستی'}), label='')
+
+    password1 = forms.CharField(required=True,
+                                widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
+                                label='')
+    password2 = forms.CharField(required=True,
+                                widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'تکرار رمز عبور'}),
+                                label='', validators=[validators.MaxLengthValidator(11)])
 
     class Meta:
-        model = User
-        fields = ['username', 'email', 'phone', 'password1', 'password2']
+        model = User  # dare mige toye kodam model save she
+        fields = ['username', 'email', 'phone', 'first_name', 'last_name', 'real_address', 'post_code', 'password1',
+                  'password2']
 
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        if User.objects.filter(username=username).exists():
+    # dare mige in filde ha ro dare
+
+    def clean_username(self):  # baz nevisi filde username
+        username = self.cleaned_data['username']  # meghdare filde ro migirim
+        users = User.objects.filter(username=username)
+        if users.exists():
             raise forms.ValidationError("این نام کاربری تکراری است و از قبل وجود دارد !")
         return username
 
@@ -80,15 +75,20 @@ class ContactForm(forms.ModelForm):
 
 
 class CustomUserCreationForm(forms.ModelForm):
-    """برای ساخت کاربر جدید (ادمین پنل)"""
+    """A form for creating new users. Includes all the required
+    fields, plus a repeated password."""
+
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
+    password2 = forms.CharField(
+        label="Password confirmation", widget=forms.PasswordInput
+    )
 
     class Meta:
         model = User
         fields = ["email", "phone"]
 
     def clean_password2(self):
+        # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
@@ -96,6 +96,7 @@ class CustomUserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
+        # Save the provided password in hashed format
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
@@ -104,7 +105,11 @@ class CustomUserCreationForm(forms.ModelForm):
 
 
 class UserChangeForm(forms.ModelForm):
-    """فرم ویرایش کاربر (ادمین پنل)"""
+    """A form for updating users. Includes all the fields on
+    the user, but replaces the password field with admin's
+    disabled password hash display field.
+    """
+
     password = ReadOnlyPasswordHashField()
 
     class Meta:
