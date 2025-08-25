@@ -1,7 +1,4 @@
-from tabnanny import verbose
-
 from django.db import models
-
 from Account.models import User
 from Products.models import Products
 
@@ -32,6 +29,3 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return self.product.name
-
-
-
