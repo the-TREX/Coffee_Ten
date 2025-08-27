@@ -8,12 +8,16 @@ from Account.models import User
 
 
 class LoginForm(forms.Form):
-    phone = forms.CharField(required=True,
-                            widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه یا ایمیل '}), label='',
-                            help_text='09...',)
-    password = forms.CharField(required=True,
-                               widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
-                               label='')
+    username = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'شماره موبایل یا ایمیل'}),
+        label='',
+    )
+    password = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
+        label='',
+    )
 
 
 class RegisterFormCustom(UserCreationForm):
@@ -34,12 +38,16 @@ class RegisterFormCustom(UserCreationForm):
     post_code = forms.CharField(required=True,
                                 widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'کد پستی'}), label='')
 
-    password1 = forms.CharField(required=True,
-                                widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
-                                label='')
-    password2 = forms.CharField(required=True,
-                                widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'تکرار رمز عبور'}),
-                                label='', validators=[validators.MaxLengthValidator(11)])
+    password1 = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={'class': 'input w-full', 'id': 'password', 'placeholder': 'رمز عبور'}),
+        label=''
+    )
+    password2 = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={'class': 'input w-full', 'id': 'password', 'placeholder': ' تکرار رمز عبور'}),
+        label=''
+    )
 
     class Meta:
         model = User  # dare mige toye kodam model save she
@@ -54,6 +62,18 @@ class RegisterFormCustom(UserCreationForm):
         if users.exists():
             raise forms.ValidationError("این نام کاربری تکراری است و از قبل وجود دارد !")
         return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("این ایمیل از قبل ثبت شده است!")
+        return email
+
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        if User.objects.filter(phone=phone).exists():
+            raise forms.ValidationError("این شماره از قبل ثبت شده است!")
+        return phone
 
 
 class UserEditForm(forms.ModelForm):

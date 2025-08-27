@@ -18,41 +18,59 @@ class UserRegisterView(CreateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            user = User.objects.create(username=form.cleaned_data['username'],
-                                       email=form.cleaned_data['email'],
-                                       phone=form.cleaned_data['phone'],
-                                       first_name=form.cleaned_data['first_name'],
-                                       last_name=form.cleaned_data['last_name'],
-                                       real_address=form.cleaned_data['real_address'],
-                                       post_code=form.cleaned_data['post_code'],
-                                       password=form.cleaned_data['password1'], )
-            login(request, user)
-            return redirect('/')
-        else:
-            return render(request, self.template_name, {'form': form})
+            # ساخت کاربر
+            user = User(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                phone=form.cleaned_data['phone'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                real_address=form.cleaned_data['real_address'],
+                post_code=form.cleaned_data['post_code'],
+            )
+            user.set_password(form.cleaned_data['password1'])
 
 
-class UserLoginView(View):  # OK
+            # authenticate با backend جدید
+            user = authenticate(
+                request,
+                username=form.cleaned_data['username'],  # شماره یا ایمیل را وارد کنید
+                password=form.cleaned_data['password1']
+            )
+            user.save()
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+        return render(request, self.template_name, {'form': form})
+
+
+class UserLoginView(View):
+    template_name = 'account/login.html'
+
     def get_next_url(self, request):
         return request.POST.get('next') or request.GET.get('next', '')
 
     def get(self, request):
         form = LoginForm()
         next_url = self.get_next_url(request)
-        return render(request, 'account/login.html', {'form': form, 'next': next_url})
+        return render(request, self.template_name, {'form': form, 'next': next_url})
 
     def post(self, request):
         form = LoginForm(request.POST)
         next_url = self.get_next_url(request)
         if form.is_valid():
-            user = authenticate(username=form.cleaned_data['phone'], password=form.cleaned_data['password'])
-            if user is not None:
+            # authenticate با شماره یا ایمیل
+            user = authenticate(
+                username=form.cleaned_data['username'],  # شماره یا ایمیل
+                password=form.cleaned_data['password']
+            )
+            if user:
                 login(request, user)
                 return redirect(next_url or '/')
             else:
                 form.add_error(None, 'نام کاربری یا رمز عبور اشتباه است')
 
-        return render(request, 'account/login.html', {'form': form, 'next': next_url})
+        return render(request, self.template_name, {'form': form, 'next': next_url})
 
 
 def user_logout(request):

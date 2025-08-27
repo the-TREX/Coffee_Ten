@@ -136,8 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Account.User'
 
-AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend",
-                           "Account.authentication.EmailauthBackend"]
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                           'Account.authentication.PhoneOrEmailBackend']
 
 ADMIN_SITE = "unfold.sites.UnfoldAdminSite"
 

@@ -1,15 +1,25 @@
 from django.contrib.auth.backends import BaseBackend
 from .models import User
 
-
-class EmailauthBackend(BaseBackend): #in class user ro ba email Login Mikone
+class PhoneOrEmailBackend(BaseBackend):
+    """
+    اجازه می‌دهد کاربر با شماره تلفن یا ایمیل وارد شود.
+    """
     def authenticate(self, request, username=None, password=None):
+        user = None
+        # ابتدا با شماره تلفن امتحان کن
         try:
-            user = User.objects.get(email=username) # talash Baraye Peida kardan User Az db
-            if user.check_password(password):
-                return user
+            user = User.objects.get(phone=username)
         except User.DoesNotExist:
-            return None
+            # اگر شماره نبود، ایمیل رو امتحان کن
+            try:
+                user = User.objects.get(email=username)
+            except User.DoesNotExist:
+                return None
+
+        if user and user.check_password(password):
+            return user
+        return None
 
     def get_user(self, user_id):
         try:
