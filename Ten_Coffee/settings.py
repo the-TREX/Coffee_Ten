@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'unfold',
+    # 'defender',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'defender.middleware.FailedLoginMiddleware',
 ]
 
 ROOT_URLCONF = 'Ten_Coffee.urls'
@@ -75,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Ten_Coffee.wsgi.application'
+# WSGI_APPLICATION = 'Ten_Coffee.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -158,3 +160,16 @@ UNFOLD = {
         },
     ],
 }
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# # Redis پیش‌فرض روی همان سرور
+# DEFENDER_REDIS_URL = "redis://localhost:6379/0"
+#
+# # اگر از هِدِر خاص پراکسی برای IP استفاده می‌کنید:
+# DEFENDER_BEHIND_REVERSE_PROXY = True
+# DEFENDER_REVERSE_PROXY_HEADER = "HTTP_X_FORWARDED_FOR"  # یا "HTTP_X_REAL_IP"
+#
+# # تعداد مجاز تلاش‌های ناموفق پیش از قفل:
+# DEFENDER_LOGIN_FAILURE_LIMIT = 2  # پیش‌فرض 3 است
+#
+# # مدت قفل/پاک شدن کانترها (ثانیه):
+# DEFENDER_COOLOFF_TIME = 600  # مثلا 10 دقیقه

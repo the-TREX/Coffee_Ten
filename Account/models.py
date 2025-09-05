@@ -50,7 +50,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     email = models.EmailField(verbose_name="email address", max_length=255)
     phone = models.CharField(verbose_name="تلفن همراه", max_length=11, unique=True)
-    username = models.CharField(max_length=30, verbose_name="نام کاربری")
+    username = models.CharField(max_length=30, verbose_name="نام کاربری", unique=True)
     first_name = models.CharField(max_length=80, verbose_name="نام", default="کاربر")
     last_name = models.CharField(max_length=80, verbose_name="نام خانوادگی", default="سیستم")
     real_address = models.CharField(max_length=400, verbose_name="آدرس", default="نامشخص")
@@ -60,8 +60,8 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'phone'
-    REQUIRED_FIELDS = ['email', 'username']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', ]
 
     def __str__(self):
         return self.email

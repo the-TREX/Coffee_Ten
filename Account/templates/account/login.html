@@ -1,161 +1,445 @@
 {% load static %}
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        background-color: #f5f5f5;
-        font-family: Homa;
-    }
-
-    .back {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(6px);
-        background-color: rgba(255, 255, 255, 0.7);
-    }
-
-    .form-box {
-        max-width: 300px;
-        background: #3f3f46;
-        overflow: hidden;
-        border-radius: 16px;
-        color: #010101;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .form {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        padding: 32px 24px 24px;
-        gap: 16px;
-        text-align: center;
-    }
-
-    /*Form text*/
-    .title {
-        color: #007aff;
-        font-weight: bold;
-        font-size: 1.6rem;
-        margin-bottom: 8px;
-    }
-
-    .subtitle {
-        font-size: 1rem;
-        color: #666;
-        margin-bottom: 16px;
-    }
-
-    /*Inputs box*/
-    .form-container {
-        overflow: hidden;
-        border-radius: 8px;
-        background-color: #fff;
-        margin: 1rem 0 .5rem;
-        width: 100%;
-
-    }
-
-    .input {
-        background: none;
-        border: 0;
-        outline: 0;
-        height: 40px;
-        width: 100%;
-        border-bottom: 1px solid #eee;
-        font-size: .9rem;
-        padding: 8px 15px;
-
-    }
-
-    .form-section {
-        padding: 16px;
-        font-size: .85rem;
-        background-color: #3f3f46;
-        box-shadow: rgb(0 0 0 / 8%) 0 -1px;
-        text-align: center;
-    }
-
-    .form-section a {
-        font-weight: bold;
-        color: #0066ff;
-        transition: color .3s ease;
-        text-decoration: none;
-    }
-
-    .form-section a:hover {
-        color: #8a0404;
-        text-decoration: none;
-    }
-
-    /*Button*/
-    .form button {
-        background-color: #22c55e;
-        color: #fff;
-        border: 0;
-        border-radius: 24px;
-        padding: 10px 16px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color .3s ease;
-        width: 100%;
-    }
-
-    .form button:hover {
-        background-color: #005ce6;
-    }
-
-    /* نمایش خطاها */
-    .error-message {
-        color: #ff3333;
-        font-size: 0.9rem;
-        margin-top: 5px;
-    }
-</style>
-<!doctype html>
-<html lang="fa">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="{% static 'Images/svg/favicon.png' %}"/>
-    <title>ورود به حساب کاربری | کافی تن</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کافی تن | ورود به حساب کاربری</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'Images/svg/favicon.png' %}">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap");
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Vazirmatn", "B Homa", sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 0 15px;
+            background: url('{% static "Coffeebeans.jpeg" %}') center/cover no-repeat, #000;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(0, 0, 0, 0.75);
+            border-radius: 16px;
+            padding: 35px 25px;
+            text-align: right;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-field {
+            position: relative;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            transition: border-bottom-color 0.3s ease;
+        }
+
+        .input-field:focus-within {
+            border-bottom-color: #ffd166;
+        }
+
+        .input-field label {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            transition: 0.2s ease;
+            pointer-events: none;
+        }
+
+        .input-field input {
+            width: 100%;
+            height: 45px;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            color: #fff;
+            padding-right: 5px;
+        }
+
+        .input-field input:focus ~ label,
+        .input-field input:valid ~ label {
+            top: -6px;
+            font-size: 13px;
+            color: #ffd166;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #ffd166;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .toggle-password:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .toggle-password svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+            transition: all 0.3s ease;
+        }
+
+        .error-message {
+            font-size: 13px;
+            color: #ff5c5c;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .error-message::before {
+            content: "⚠";
+            font-size: 14px;
+        }
+
+        .forget {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #fff;
+            margin: 15px 0;
+        }
+
+        .forget label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .forget input[type="checkbox"] {
+            accent-color: #ffd166;
+            cursor: pointer;
+        }
+
+        .wrapper a {
+            color: #ffd166;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .wrapper a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        button {
+            background: #ffd166;
+            color: #000;
+            font-weight: 600;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: rgba(255, 209, 102, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 209, 102, 0.3);
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 480px) {
+            .wrapper {
+                padding: 25px 15px;
+            }
+
+            .forget {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* افزودن انیمیشن برای لودینگ */
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* انیمیشن برای آیکون چشم */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .eye-animation {
+            animation: pulse 0.5s ease;
+        }
+    </style>
 </head>
-<body class="back"
-      style="background-image: url('{% static 'bg_coffe.png' %}'); background-size: cover; background-position: center;">
-<div class="form-box">
-    <form class="form" method="post" dir="rtl">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
-        <span class="title">ورود به حساب کاربری</span>
+<body>
+    <div class="wrapper">
+        <h1>ورود به حساب کاربری</h1>
+
+        <!-- نمایش خطاهای کلی -->
         {% if form.errors %}
-            {% for error in form.non_field_errors %}
-                <div class="error-message">{{ error }}</div>
-            {% endfor %}
+            <div style="text-align: center; background: rgba(255, 92, 92, 0.15); padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(255, 92, 92, 0.3);">
+                {% for error in form.non_field_errors %}
+                    <div class="error-message">{{ error }}</div>
+                {% endfor %}
+            </div>
         {% endif %}
 
-        <div class="form-container" dir="rtl">
-            {{ form.username }}
-            {% for error in form.username.errors %}
-                <div class="error-message">{{ error }}</div>
-            {% endfor %}
+        <form method="post" id="loginForm">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
 
-            {{ form.password }}
-            {% for error in form.password.errors %}
-                <div class="error-message">{{ error }}</div>
-            {% endfor %}
+            <!-- نام کاربری -->
+            <div class="input-field">
+                {{ form.username }}
+                <label for="{{ form.username.id_for_label }}">شماره موبایل یا ایمیل</label>
+                {% for error in form.username.errors %}
+                    <div class="error-message">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- رمز عبور -->
+            <div class="input-field">
+                <div class="password-container">
+                    {{ form.password }}
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="نمایش رمز عبور">
+                        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <!-- آیکون چشم بسته (پیش‌فرض) -->
+                            <path d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z"/>
+                        </svg>
+                    </button>
+                    <label for="{{ form.password.id_for_label }}">رمز عبور</label>
+                </div>
+                {% for error in form.password.errors %}
+                    <div class="error-message">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- یادآوری و فراموشی رمز -->
+            <div class="forget">
+                <label for="remember_me">
+                    <input type="checkbox" id="remember_me" name="remember_me">
+                    مرا به خاطر بسپار
+                </label>
+{#                <a href="{% url 'password_reset' %}">رمز عبور را فراموش کرده‌اید؟</a>#}
+            </div>
+
+            <button type="submit" id="submitBtn">
+                <span id="btnText">ورود</span>
+                <div class="loading" id="loadingSpinner"></div>
+            </button>
+        </form>
+
+        <!-- ثبت نام برای کاربران جدید -->
+        <div class="register">
+            <p>حساب کاربری ندارید؟ <a href="{% url 'account:register' %}">ثبت نام کنید</a></p>
         </div>
-
-        <button type="submit">ثبت نام</button>
-    </form>
-    <div class="form-section">
-        <p> حساب ندارید؟ <a href="{% url 'account:register' %}">ثبت نام کنید</a></p>
     </div>
-</div>
 
+    <script>
+        // افزودن رفتار برای نمایش لودینگ هنگام ارسال فرم
+        document.getElementById('loginForm').addEventListener('submit', function() {
+            document.getElementById('btnText').style.display = 'none';
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+        });
 
+        // اعتبارسنجی سمت کلاینت
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            let isValid = true;
+            const username = document.getElementById('{{ form.username.id_for_label }}');
+            const password = document.getElementById('{{ form.password.id_for_label }}');
+
+            // بررسی پر بودن فیلدها
+            if (!username.value.trim()) {
+                isValid = false;
+                showError(username, 'لطفاً شماره موبایل یا ایمیل خود را وارد کنید');
+            }
+
+            if (!password.value.trim()) {
+                isValid = false;
+                showError(password, 'لطفاً رمز عبور خود را وارد کنید');
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                document.getElementById('btnText').style.display = 'block';
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+
+        // عملکرد نمایش/مخفی کردن رمز عبور با SVG و انیمیشن
+        const togglePassword = document.getElementById('togglePassword');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const passwordInput = document.getElementById('{{ form.password.id_for_label }}');
+
+        // آیکون چشم باز
+        const eyeOpenSvg = '<path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>';
+
+        // آیکون چشم بسته
+        const eyeClosedSvg = '<path d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z"/>';
+
+        togglePassword.addEventListener('click', function() {
+            // تغییر نوع فیلد رمز عبور
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // تغییر آیکون SVG
+            if (type === 'password') {
+                eyeIcon.innerHTML = eyeClosedSvg;
+                togglePassword.setAttribute('aria-label', 'نمایش رمز عبور');
+            } else {
+                eyeIcon.innerHTML = eyeOpenSvg;
+                togglePassword.setAttribute('aria-label', 'مخفی کردن رمز عبور');
+            }
+
+            // اضافه کردن انیمیشن به آیکون
+            eyeIcon.classList.add('eye-animation');
+            setTimeout(() => {
+                eyeIcon.classList.remove('eye-animation');
+            }, 500);
+        });
+
+        function showError(input, message) {
+            // ایجاد یا نمایش پیام خطا
+            let errorDiv = input.parentNode.querySelector('.error-message');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                input.parentNode.appendChild(errorDiv);
+            }
+            errorDiv.textContent = message;
+        }
+
+        // حذف پیام خطا هنگام تایپ
+        const inputs = document.querySelectorAll('.input-field input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const errorDiv = this.parentNode.querySelector('.error-message');
+                if (errorDiv && errorDiv.textContent) {
+                    errorDiv.textContent = '';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

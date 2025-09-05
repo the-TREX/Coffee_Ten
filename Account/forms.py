@@ -10,57 +10,80 @@ from Account.models import User
 class LoginForm(forms.Form):
     username = forms.CharField(
         required=True,
-        widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'شماره موبایل یا ایمیل'}),
-        label='',
+        widget=forms.TextInput(attrs={
+            'placeholder': ' ',
+        }),
+        label='شماره موبایل یا ایمیل',
     )
     password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={'class': 'input', 'placeholder': 'رمز عبور'}),
-        label='',
+        widget=forms.PasswordInput(attrs={
+            'placeholder': ' ',
+        }),
+        label='رمز عبور',
     )
 
 
 class RegisterFormCustom(UserCreationForm):
-    username = forms.CharField(required=True,
-                               widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام کاربری'}), label='')
-    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'input', 'placeholder': 'ایمیل'}),
-                             label='')
-    phone = forms.CharField(required=True,
-                            widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'تلفن همراه'}), label='',
-                            help_text='09...', validators=[validators.MaxLengthValidator(11)])
-    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام'}),
-                                 label='')
-    last_name = forms.CharField(required=True,
-                                widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'نام خانوادگی'}),
-                                label='')
-    real_address = forms.CharField(required=True,
-                                   widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'آدرس'}), label='')
-    post_code = forms.CharField(required=True,
-                                widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'کد پستی'}), label='')
-
+    username = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        label='نام کاربری'
+    )
+    first_name = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        label='نام'
+    )
+    last_name = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        label='نام خانوادگی'
+    )
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={'placeholder': ' '}),
+        label='ایمیل'
+    )
+    phone = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        label='شماره همراه',
+        validators=[validators.MaxLengthValidator(11)],
+        help_text='09...'
+    )
+    real_address = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        label='آدرس'
+    )
+    post_code = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        label='کد پستی'
+    )
     password1 = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={'class': 'input w-full', 'id': 'password', 'placeholder': 'رمز عبور'}),
-        label=''
+        widget=forms.PasswordInput(attrs={'placeholder': ' ', 'autocomplete': 'new-password'}),
+        label='رمز عبور'
     )
     password2 = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={'class': 'input w-full', 'id': 'password', 'placeholder': ' تکرار رمز عبور'}),
-        label=''
+        widget=forms.PasswordInput(attrs={'placeholder': ' ', 'autocomplete': 'new-password'}),
+        label='تکرار رمز عبور'
     )
 
     class Meta:
-        model = User  # dare mige toye kodam model save she
-        fields = ['username', 'email', 'phone', 'first_name', 'last_name', 'real_address', 'post_code', 'password1',
-                  'password2']
+        model = User
+        fields = [
+            'username', 'first_name', 'last_name', 'email', 'phone',
+            'real_address', 'post_code', 'password1', 'password2'
+        ]
 
-    # dare mige in filde ha ro dare
-
-    def clean_username(self):  # baz nevisi filde username
-        username = self.cleaned_data['username']  # meghdare filde ro migirim
-        users = User.objects.filter(username=username)
-        if users.exists():
-            raise forms.ValidationError("این نام کاربری تکراری است و از قبل وجود دارد !")
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("این نام کاربری از قبل وجود دارد!")
         return username
 
     def clean_email(self):

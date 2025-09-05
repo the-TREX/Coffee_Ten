@@ -29,18 +29,17 @@ class UserRegisterView(CreateView):
                 post_code=form.cleaned_data['post_code'],
             )
             user.set_password(form.cleaned_data['password1'])
-
-
-            # authenticate با backend جدید
+            user.save()
             user = authenticate(
                 request,
                 username=form.cleaned_data['username'],  # شماره یا ایمیل را وارد کنید
                 password=form.cleaned_data['password1']
             )
-            user.save()
             if user is not None:
                 login(request, user)
                 return redirect('/')
+            # authenticate با backend جدید
+
         return render(request, self.template_name, {'form': form})
 
 
@@ -58,6 +57,7 @@ class UserLoginView(View):
     def post(self, request):
         form = LoginForm(request.POST)
         next_url = self.get_next_url(request)
+        remember_me = request.POST.get('remember_me', None)
         if form.is_valid():
             # authenticate با شماره یا ایمیل
             user = authenticate(
@@ -66,6 +66,10 @@ class UserLoginView(View):
             )
             if user:
                 login(request, user)
+                if remember_me:
+                    request.session.set_expiry(1209600)
+                else:
+                    request.session.set_expiry(0)
                 return redirect(next_url or '/')
             else:
                 form.add_error(None, 'نام کاربری یا رمز عبور اشتباه است')
